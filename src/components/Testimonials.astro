@@ -1,0 +1,54 @@
+---
+const testimonials = [
+  {
+    quote: "FAIO didn't just design a logo — they figured out what we were actually trying to say, and then built everything around that. It changed how we talk about ourselves internally too.",
+    author: "Sara M.",
+    role: "Co-founder, Orka",
+    initial: "S",
+  },
+  {
+    quote: "We'd worked with two other studios before FAIO. The difference was the strategy upfront. By the time we saw design concepts, they already felt inevitable.",
+    author: "James R.",
+    role: "CMO, Meridian Group",
+    initial: "J",
+  },
+  {
+    quote: "Fast, sharp, and zero hand-holding needed. They asked the right questions and ran with it. The brand they delivered is better than what I had in my head.",
+    author: "Lena K.",
+    role: "Founder, Halo",
+    initial: "L",
+  },
+];
+---
+<section class="px-6 md:px-12 py-28">
+  <div class="max-w-6xl mx-auto">
+    <div class="mb-16">
+      <p class="text-xs tracking-[0.3em] uppercase text-muted mb-3">What clients say</p>
+      <h2 class="font-display font-extrabold text-[clamp(2rem,5vw,3.5rem)] text-crema leading-tight">
+        Don't take<br />our word for it.
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      {testimonials.map((t) => (
+        <blockquote class="bg-panel rounded-2xl p-8 flex flex-col justify-between border border-panel-2 hover:border-tierra/40 transition-colors duration-300">
+          <!-- Quote mark -->
+          <div>
+            <span class="text-tierra font-display font-bold text-5xl leading-none select-none">"</span>
+            <p class="text-crema leading-relaxed mt-2">{t.quote}</p>
+          </div>
+
+          <footer class="mt-8 flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full bg-tierra/20 flex items-center justify-center text-tierra font-bold text-sm flex-shrink-0">
+              {t.initial}
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-crema">{t.author}</p>
+              <p class="text-xs text-muted">{t.role}</p>
+            </div>
+          </footer>
+        </blockquote>
+      ))}
+    </div>
+  </div>
+</section>

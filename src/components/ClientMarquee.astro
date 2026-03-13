@@ -1,0 +1,10 @@
+---
+const clients = ["Orka", "Meridian", "Halo", "Sable", "Novu", "Flint", "Crest", "Arca"];
+---
+<div class="border-y border-panel py-5 overflow-hidden">
+  <div class="flex animate-marquee whitespace-nowrap">
+    {[...clients, ...clients].map((c) => (
+      <span class="mx-10 text-xs tracking-[0.4em] uppercase text-muted font-medium">{c}</span>
+    ))}
+  </div>
+</div>

@@ -1,0 +1,67 @@
+---
+---
+<section id="about" class="px-6 md:px-12 py-28">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+    <!-- Left: visual -->
+    <div class="relative">
+      <div class="rounded-2xl overflow-hidden bg-panel aspect-[4/5] flex items-end p-8">
+        <!-- Abstract brand mark -->
+        <div class="absolute inset-0 flex items-center justify-center">
+          <span
+            class="font-display font-extrabold select-none leading-none text-[16rem] opacity-5 text-crema"
+          >F</span>
+        </div>
+        <!-- Tierra block accent -->
+        <div class="absolute top-8 left-8 w-12 h-1.5 bg-tierra rounded-full"></div>
+
+        <div class="relative">
+          <p class="text-xs tracking-widest uppercase text-muted mb-2">Since 2019</p>
+          <p class="font-display font-bold text-3xl text-crema">FAIO Studio</p>
+        </div>
+      </div>
+      <!-- Floating stat card -->
+      <div class="absolute -bottom-6 -right-6 bg-fractura text-antracita rounded-2xl p-5 shadow-2xl">
+        <p class="font-display font-extrabold text-4xl leading-none">40+</p>
+        <p class="text-sm font-medium mt-1">brands launched</p>
+      </div>
+    </div>
+
+    <!-- Right: text -->
+    <div>
+      <p class="text-xs tracking-[0.3em] uppercase text-muted mb-5">About the studio</p>
+      <h2 class="font-display font-extrabold text-[clamp(2rem,4vw,3rem)] text-crema leading-tight mb-8">
+        We think before<br />we draw.
+      </h2>
+
+      <div class="space-y-5 text-muted-2 leading-relaxed">
+        <p>
+          FAIO is a boutique branding studio founded on a single conviction: that design without strategy
+          is decoration. We've built identities for SaaS companies raising Series B, consumer brands
+          launching into new categories, and founders who know exactly who they are — they just need
+          the world to see it too.
+        </p>
+        <p>
+          We're a small team by design. Every project gets senior attention from day one. No hand-offs
+          to junior designers six weeks in. You talk to the people doing the work.
+        </p>
+        <p>
+          Our process is rigorous and our opinions are strong. We'll push back when something isn't
+          right — because our job is to protect your brand, not to make you feel comfortable.
+        </p>
+      </div>
+
+      <div class="mt-10 grid grid-cols-3 gap-6 border-t border-panel pt-8">
+        {[
+          { stat: "40+", label: "Brands built" },
+          { stat: "8", label: "Industries" },
+          { stat: "92%", label: "Client retention" },
+        ].map(({ stat, label }) => (
+          <div>
+            <p class="font-display font-bold text-2xl text-tierra">{stat}</p>
+            <p class="text-xs text-muted mt-1">{label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,116 @@
+---
+const services = [
+  {
+    title: "Brand Identity",
+    price: "From $18k",
+    desc: "Logo system, typography, color, brand guidelines, and asset library. Everything to build and run a consistent identity.",
+    features: ["Logo & lockups", "Color & typography", "Brand guidelines", "Asset library"],
+    featured: false,
+  },
+  {
+    title: "Brand Strategy",
+    price: "From $8k",
+    desc: "Positioning, messaging framework, and voice guidelines. For companies that need to know who they are before they design anything.",
+    features: ["Positioning", "Messaging framework", "Voice & tone", "Competitive audit"],
+    featured: false,
+  },
+  {
+    title: "Digital Design",
+    price: "From $22k",
+    desc: "Website design, UI systems, and digital brand implementation. Strategy-led and built to convert.",
+    features: ["Website design", "UI/component system", "Responsive specs", "Developer handoff"],
+    featured: true,
+  },
+  {
+    title: "Brand Sprint",
+    price: "$4,500",
+    desc: "A focused 2-week engagement for early-stage founders. Core positioning + a visual direction to move forward with.",
+    features: ["2-week timeline", "Positioning draft", "Visual direction", "1 revision round"],
+    featured: false,
+  },
+];
+---
+<section id="services" class="px-6 md:px-12 py-28 bg-panel/30">
+  <div class="max-w-6xl mx-auto">
+    <div class="mb-16">
+      <p class="text-xs tracking-[0.3em] uppercase text-muted mb-3">What we offer</p>
+      <h2 class="font-display font-extrabold text-[clamp(2rem,5vw,3.5rem)] text-crema leading-tight">
+        Scoped to what<br />you actually need.
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-4 gap-4">
+      {services.map((s) => (
+        <div
+          class={[
+            "relative rounded-2xl p-7 flex flex-col",
+            s.featured
+              ? "bg-tierra text-antracita"
+              : "bg-panel border border-panel-2",
+          ].join(" ")}
+        >
+          {s.featured && (
+            <span class="absolute -top-3 left-6 text-xs bg-fractura text-antracita font-semibold px-3 py-1 rounded-full">
+              Most popular
+            </span>
+          )}
+
+          <div class="mb-6">
+            <h3
+              class={[
+                "font-display font-bold text-xl mb-1",
+                s.featured ? "text-antracita" : "text-crema",
+              ].join(" ")}
+            >{s.title}</h3>
+            <p
+              class={[
+                "text-2xl font-bold",
+                s.featured ? "text-antracita/80" : "text-tierra",
+              ].join(" ")}
+            >{s.price}</p>
+          </div>
+
+          <p
+            class={[
+              "text-sm leading-relaxed mb-6",
+              s.featured ? "text-antracita/70" : "text-muted-2",
+            ].join(" ")}
+          >{s.desc}</p>
+
+          <ul class="space-y-2 mb-8 flex-1">
+            {s.features.map((f) => (
+              <li
+                class={[
+                  "text-sm flex items-center gap-2",
+                  s.featured ? "text-antracita/80" : "text-muted",
+                ].join(" ")}
+              >
+                <span
+                  class={[
+                    "w-1 h-1 rounded-full flex-shrink-0",
+                    s.featured ? "bg-antracita/40" : "bg-tierra",
+                  ].join(" ")}
+                ></span>
+                {f}
+              </li>
+            ))}
+          </ul>
+
+          <a
+            href="#contact"
+            class={[
+              "text-center text-sm font-semibold py-3 rounded-full transition-colors",
+              s.featured
+                ? "bg-antracita text-fractura hover:bg-antracita/90"
+                : "border border-panel-2 text-crema hover:border-muted",
+            ].join(" ")}
+          >Get a quote →</a>
+        </div>
+      ))}
+    </div>
+
+    <p class="mt-8 text-sm text-muted text-center">
+      Not sure which fits? <a href="#contact" class="text-crema underline underline-offset-4">Let's talk</a> — we'll scope it together.
+    </p>
+  </div>
+</section>

@@ -1,0 +1,82 @@
+---
+const works = [
+  {
+    title: "Orka",
+    type: "Brand Identity & Digital",
+    tag: "SaaS / B2B",
+    outcome: "Rebranded from a dev tool to an enterprise platform. Raised Series B within 6 months of launch.",
+    color: "#231a10",
+    accent: "#D85A30",
+  },
+  {
+    title: "Meridian",
+    type: "Brand Identity & Campaign",
+    tag: "Real Estate",
+    outcome: "New identity supported a property launch that sold out in 14 days — first time in the company's history.",
+    color: "#1f1009",
+    accent: "#EF9F27",
+  },
+  {
+    title: "Halo",
+    type: "Brand Strategy & Identity",
+    tag: "Consumer / Wellness",
+    outcome: "Repositioned from mid-market to premium. Average order value increased 40% in quarter one.",
+    color: "#1a1208",
+    accent: "#D85A30",
+  },
+];
+---
+<section id="work" class="px-6 md:px-12 py-28">
+  <div class="max-w-6xl mx-auto">
+    <!-- Header -->
+    <div class="flex items-end justify-between mb-16">
+      <div>
+        <p class="text-xs tracking-[0.3em] uppercase text-muted mb-3">Selected work</p>
+        <h2 class="font-display font-extrabold text-[clamp(2rem,5vw,3.5rem)] text-crema leading-tight">
+          Results, not<br />just aesthetics.
+        </h2>
+      </div>
+      <p class="hidden md:block max-w-xs text-muted-2 text-sm leading-relaxed text-right">
+        Every project starts with a business problem. The visual work comes after we've solved it.
+      </p>
+    </div>
+
+    <!-- Work grid -->
+    <div class="grid md:grid-cols-3 gap-4">
+      {works.map((w, i) => (
+        <article
+          class="group relative rounded-2xl overflow-hidden cursor-pointer"
+          style={`background: ${w.color};`}
+        >
+          <!-- Placeholder image area -->
+          <div class="h-72 flex items-center justify-center relative overflow-hidden">
+            <div
+              class="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity duration-500"
+              style={`background: radial-gradient(circle at 30% 60%, ${w.accent}, transparent 70%);`}
+            ></div>
+            <span
+              class="font-display font-extrabold text-[5rem] leading-none select-none opacity-10 group-hover:opacity-15 transition-opacity"
+              style={`color: ${w.accent};`}
+            >{w.title[0]}</span>
+          </div>
+
+          <!-- Content -->
+          <div class="p-7">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs tracking-widest uppercase text-muted">{w.tag}</span>
+              <span class="text-xs text-muted-2">{String(i + 1).padStart(2, "0")}</span>
+            </div>
+            <h3 class="font-display font-bold text-2xl text-crema mb-1">{w.title}</h3>
+            <p class="text-sm text-muted mb-5">{w.type}</p>
+            <p class="text-sm text-muted-2 leading-relaxed border-t border-white/5 pt-5">{w.outcome}</p>
+          </div>
+
+          <!-- Hover CTA -->
+          <div class="absolute top-5 right-5 opacity-0 group-hover:opacity-100 transition-opacity">
+            <span class="text-xs px-3 py-1.5 rounded-full bg-white/10 text-crema backdrop-blur-sm">View case study →</span>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
