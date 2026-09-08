@@ -1,0 +1,35 @@
+---
+import { getLangFromUrl, useTranslations, switchLang, languages, type Lang } from '../i18n';
+
+const current = getLangFromUrl(Astro.url);
+const t = useTranslations(current);
+
+const options = (Object.keys(languages) as Lang[]).map((code) => ({
+  code,
+  href: switchLang(Astro.url, code),
+  label: languages[code],
+  short: code === 'en' ? t.langSwitcher.enShort : t.langSwitcher.esShort,
+}));
+---
+<div
+  class="flex items-center rounded-full border border-panel-2 p-0.5"
+  role="group"
+  aria-label={t.langSwitcher.label}
+>
+  {options.map(({ code, href, label, short }) => (
+    <a
+      href={href}
+      hreflang={code}
+      lang={code}
+      data-set-lang={code}
+      aria-label={label}
+      aria-current={code === current ? 'true' : undefined}
+      class:list={[
+        'px-2 sm:px-2.5 py-1 text-xs font-medium tracking-wide rounded-full transition-colors',
+        code === current
+          ? 'bg-panel-2 text-crema'
+          : 'text-muted hover:text-crema',
+      ]}
+    >{short}</a>
+  ))}
+</div>
