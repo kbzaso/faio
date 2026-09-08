@@ -1,0 +1,14 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import CaseStudy from '../../../components/CaseStudy.astro';
+import { works, getWork } from '../../../data/work';
+
+export function getStaticPaths() {
+  return works.map((w) => ({ params: { slug: w.slug } }));
+}
+
+const work = getWork(Astro.params.slug!)!;
+---
+<Layout title={`${work.title} — FAIO`} description={work.outcome.es}>
+  <CaseStudy work={work} />
+</Layout>

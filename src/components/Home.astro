@@ -1,0 +1,28 @@
+---
+// Every section of the one-pager. Both `/` and `/es/` render this; each section
+// picks up its own locale from the URL.
+//
+// hidden-sections: Work and Testimonials are parked until the real case studies
+// and client quotes exist. To restore them, uncomment here AND in Nav.astro,
+// Footer.astro and Hero.astro — grep for "hidden-sections" to find every spot.
+import Nav from './Nav.astro';
+import Hero from './Hero.astro';
+import ClientMarquee from './ClientMarquee.astro';
+// import Work from './Work.astro';
+import Process from './Process.astro';
+import About from './About.astro';
+import Services from './Services.astro';
+// import Testimonials from './Testimonials.astro';
+import Contact from './Contact.astro';
+import Footer from './Footer.astro';
+---
+<Nav />
+<Hero />
+<!-- <ClientMarquee /> -->
+{/* hidden-sections: <Work /> */}
+<Process />
+<About />
+<Services />
+{/* hidden-sections: <Testimonials /> */}
+<Contact />
+<Footer />

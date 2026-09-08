@@ -1,18 +1,46 @@
 ---
 import '../styles/global.css';
+import { getLangFromUrl, useTranslations, switchLang, languages, type Lang } from '../i18n';
+import { localeRedirectScript } from '../i18n/detect';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const { title = t.meta.title, description = t.meta.description } = Astro.props;
+
+// Relative hrefs: the production domain isn't configured via `site` yet.
+// Set `site` in astro.config.mjs and these can become absolute URLs.
+const alternates = (Object.keys(languages) as Lang[]).map((code) => ({
+  code,
+  href: switchLang(Astro.url, code),
+}));
 ---
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="description" content="FAIO is a branding studio that helps ambitious companies build identities worth remembering — from strategy to execution." />
-    <title>FAIO — Branding Studio</title>
+    <meta name="description" content={description} />
+    <title>{title}</title>
+
+    {alternates.map(({ code, href }) => (
+      <link rel="alternate" hreflang={code} href={href} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={switchLang(Astro.url, 'en')} />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+
+    <!-- Runs before first paint so a redirected visitor never sees the wrong language. -->
+    <script is:inline set:html={localeRedirectScript} />
   </head>
   <body>
     <slot />

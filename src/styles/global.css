@@ -56,6 +56,19 @@
 
   body { overflow-x: hidden; }
 
+  /* Long words — Spanish is full of them — must never escape their container.
+     On mobile the contact grid has no explicit column count, so its implicit
+     column sizes to min-content: one long word stretched it and pushed the
+     whole page sideways. On desktop `grid-cols-2` pins the track instead, so
+     the word slid out over the form. `anywhere` is required rather than
+     `break-word` — it is the one that also shrinks min-content width, which is
+     what stops the column stretching. Hyphenation is preferred when it can be
+     applied, so a forced break reads as typography rather than a bug. */
+  h1, h2, h3 {
+    hyphens: auto;
+    overflow-wrap: anywhere;
+  }
+
   a { color: inherit; text-decoration: none; }
 
   img, svg { display: block; }
