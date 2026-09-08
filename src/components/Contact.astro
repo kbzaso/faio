@@ -1,32 +1,30 @@
 ---
+import { getLangFromUrl, useTranslations } from '../i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const f = t.contact.form;
 ---
 <section id="contact" class="px-6 md:px-12 py-28 bg-panel/30">
   <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-start">
     <!-- Left -->
     <div>
-      <p class="text-xs tracking-[0.3em] uppercase text-muted mb-5">Start a project</p>
-      <h2 class="font-display font-extrabold text-[clamp(2.5rem,5vw,4rem)] text-crema leading-tight mb-6">
-        Let's build something<br />
-        <span class="text-tierra">worth remembering.</span>
+      <p class="text-xs tracking-[0.3em] uppercase text-muted mb-5">{t.contact.eyebrow}</p>
+      <h2 class="font-display font-bold text-[clamp(1.5rem,3.1vw,2.75rem)] text-crema leading-tight mb-6">
+        {t.contact.titleLine1}<br />
+        <span class="text-tierra">{t.contact.titleHighlight}</span>
       </h2>
       <p class="text-muted-2 leading-relaxed max-w-md mb-10">
-        Tell us about your project. We'll respond within 48 hours with a brief assessment and, if it's
-        a good fit, a proposal call.
+        {t.contact.body}
       </p>
 
       <div class="space-y-4 text-sm">
-        <div class="flex items-center gap-3 text-muted">
-          <div class="w-1.5 h-1.5 rounded-full bg-tierra"></div>
-          <span>Projects start at <span class="text-crema">$4,500</span></span>
-        </div>
-        <div class="flex items-center gap-3 text-muted">
-          <div class="w-1.5 h-1.5 rounded-full bg-tierra"></div>
-          <span>Response within <span class="text-crema">48 hours</span></span>
-        </div>
-        <div class="flex items-center gap-3 text-muted">
-          <div class="w-1.5 h-1.5 rounded-full bg-tierra"></div>
-          <span>Free 30-min discovery call</span>
-        </div>
+        {t.contact.bullets.map((b) => (
+          <div class="flex items-center gap-3 text-muted">
+            <div class="w-1.5 h-1.5 rounded-full bg-tierra"></div>
+            <span>{b.pre}{b.strong && <span class="text-crema">{b.strong}</span>}{b.post}</span>
+          </div>
+        ))}
       </div>
     </div>
 
@@ -37,56 +35,56 @@
     >
       <div class="grid grid-cols-2 gap-4">
         <div class="flex flex-col gap-2">
-          <label class="text-xs text-muted tracking-wide uppercase" for="name">Name</label>
+          <label class="text-xs text-muted tracking-wide uppercase" for="name">{f.name}</label>
           <input
             id="name"
             type="text"
-            placeholder="Your name"
+            placeholder={f.namePlaceholder}
             class="bg-antracita border border-panel-2 rounded-lg px-4 py-3 text-crema text-sm placeholder:text-muted focus:outline-none focus:border-tierra transition-colors"
           />
         </div>
         <div class="flex flex-col gap-2">
-          <label class="text-xs text-muted tracking-wide uppercase" for="company">Company</label>
+          <label class="text-xs text-muted tracking-wide uppercase" for="company">{f.company}</label>
           <input
             id="company"
             type="text"
-            placeholder="Your company"
+            placeholder={f.companyPlaceholder}
             class="bg-antracita border border-panel-2 rounded-lg px-4 py-3 text-crema text-sm placeholder:text-muted focus:outline-none focus:border-tierra transition-colors"
           />
         </div>
       </div>
 
       <div class="flex flex-col gap-2">
-        <label class="text-xs text-muted tracking-wide uppercase" for="email">Email</label>
+        <label class="text-xs text-muted tracking-wide uppercase" for="email">{f.email}</label>
         <input
           id="email"
           type="email"
-          placeholder="you@company.com"
+          placeholder={f.emailPlaceholder}
           class="bg-antracita border border-panel-2 rounded-lg px-4 py-3 text-crema text-sm placeholder:text-muted focus:outline-none focus:border-tierra transition-colors"
         />
       </div>
 
       <div class="flex flex-col gap-2">
-        <label class="text-xs text-muted tracking-wide uppercase" for="service">Service</label>
+        <label class="text-xs text-muted tracking-wide uppercase" for="service">{f.service}</label>
         <select
           id="service"
           class="select-arrow bg-antracita border border-panel-2 rounded-lg px-4 py-3 text-crema text-sm focus:outline-none focus:border-tierra transition-colors appearance-none"
         >
-          <option value="" disabled selected>What are you looking for?</option>
-          <option value="identity">Brand Identity</option>
-          <option value="strategy">Brand Strategy</option>
-          <option value="digital">Digital Design</option>
-          <option value="sprint">Brand Sprint</option>
-          <option value="unsure">Not sure yet</option>
+          <option value="" disabled selected>{f.servicePlaceholder}</option>
+          <option value="identity">{f.serviceOptions.identity}</option>
+          <option value="strategy">{f.serviceOptions.strategy}</option>
+          <option value="digital">{f.serviceOptions.digital}</option>
+          {/* hidden-sprint: restore with the Brand Sprint service card */}
+          <option value="unsure">{f.serviceOptions.unsure}</option>
         </select>
       </div>
 
       <div class="flex flex-col gap-2">
-        <label class="text-xs text-muted tracking-wide uppercase" for="message">Brief</label>
+        <label class="text-xs text-muted tracking-wide uppercase" for="message">{f.message}</label>
         <textarea
           id="message"
           rows="4"
-          placeholder="Tell us about your brand, your goals, and your timeline..."
+          placeholder={f.messagePlaceholder}
           class="bg-antracita border border-panel-2 rounded-lg px-4 py-3 text-crema text-sm placeholder:text-muted focus:outline-none focus:border-tierra transition-colors resize-none"
         ></textarea>
       </div>
@@ -94,7 +92,7 @@
       <button
         type="submit"
         class="w-full py-4 bg-fractura text-antracita font-semibold rounded-full hover:bg-fractura-dark transition-colors"
-      >Send inquiry →</button>
+      >{f.submit}</button>
     </form>
   </div>
 </section>

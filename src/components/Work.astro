@@ -1,18 +1,23 @@
 ---
-import { works } from '../data/work';
+import { resolveWorks } from '../data/work';
+import { getLangFromUrl, useTranslations, localizePath } from '../i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const works = resolveWorks(lang);
 ---
 <section id="work" class="px-6 md:px-12 py-28">
   <div class="max-w-6xl mx-auto">
     <!-- Header -->
     <div class="flex items-end justify-between mb-16">
       <div>
-        <p class="text-xs tracking-[0.3em] uppercase text-muted mb-3">Selected work</p>
-        <h2 class="font-display font-extrabold text-[clamp(2rem,5vw,3.5rem)] text-crema leading-tight">
-          Results, not<br />just aesthetics.
+        <p class="text-xs tracking-[0.3em] uppercase text-muted mb-3">{t.work.eyebrow}</p>
+        <h2 class="font-display font-bold text-[clamp(1.5rem,5vw,3.5rem)] text-crema leading-tight">
+          {t.work.titleLine1}<br />{t.work.titleLine2}
         </h2>
       </div>
       <p class="hidden md:block max-w-xs text-muted-2 text-sm leading-relaxed text-right">
-        Every project starts with a business problem. The visual work comes after we've solved it.
+        {t.work.note}
       </p>
     </div>
 
@@ -20,7 +25,7 @@ import { works } from '../data/work';
     <div class="grid md:grid-cols-3 gap-4">
       {works.map((w, i) => (
         <a
-          href={`/work/${w.slug}`}
+          href={localizePath(`/work/${w.slug}`, lang)}
           class="group relative rounded-2xl overflow-hidden cursor-pointer block"
           style={`background: ${w.color};`}
         >
@@ -49,7 +54,7 @@ import { works } from '../data/work';
 
           <!-- Hover CTA -->
           <div class="absolute top-5 right-5 opacity-0 group-hover:opacity-100 transition-opacity">
-            <span class="text-xs px-3 py-1.5 rounded-full bg-white/10 text-crema backdrop-blur-sm">View case study →</span>
+            <span class="text-xs px-3 py-1.5 rounded-full bg-white/10 text-crema backdrop-blur-sm">{t.work.viewCase}</span>
           </div>
         </a>
       ))}
