@@ -213,7 +213,21 @@ export const en = {
       },
       message: "Brief",
       messagePlaceholder: "Tell us about your brand, your goals, and your timeline...",
+      optional: "Optional",
       submit: "Send inquiry →",
+      submitting: "Sending…",
+      errors: {
+        name: "Tell us your name.",
+        email: "Enter a valid email address.",
+        service: "Pick what you're looking for.",
+        message: "A line or two about the project is enough.",
+        network: "Something went wrong on our end — try again in a moment.",
+      },
+      success: {
+        title: "Inquiry sent.",
+        body: "Thanks — we have it. Expect a reply within 48 hours.",
+        again: "Send another",
+      },
     },
   },
 

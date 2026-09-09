@@ -220,7 +220,21 @@ export const es: Dictionary = {
       },
       message: "Brief",
       messagePlaceholder: "Cuéntanos sobre tu marca, tus objetivos y tus plazos...",
+      optional: "Opcional",
       submit: "Enviar consulta →",
+      submitting: "Enviando…",
+      errors: {
+        name: "Cuéntanos tu nombre.",
+        email: "Ingresa un email válido.",
+        service: "Elige qué estás buscando.",
+        message: "Con una o dos líneas sobre el proyecto basta.",
+        network: "Algo falló de nuestro lado — vuelve a intentarlo en un momento.",
+      },
+      success: {
+        title: "Consulta enviada.",
+        body: "Gracias — ya la tenemos. Te respondemos en menos de 48 horas.",
+        again: "Enviar otra",
+      },
     },
   },
 
