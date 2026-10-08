@@ -41,6 +41,8 @@ const alternates = (Object.keys(languages) as Lang[]).map((code) => ({
 
     <!-- Runs before first paint so a redirected visitor never sees the wrong language. -->
     <script is:inline set:html={localeRedirectScript} />
+
+    <script is:inline defer src="https://cloud.umami.is/script.js" data-website-id="71af548b-115e-42b5-9316-0eaa95c119d7"></script>
   </head>
   <body>
     <slot />
