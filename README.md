@@ -4,12 +4,22 @@ Marketing site for **FAIO**, a branding studio. A bilingual (EN/ES) one-pager
 plus per-project case-study pages, built with Astro and Tailwind and shipped as
 static files.
 
-- **Framework:** [Astro 5](https://astro.build) — static output, zero client JS
-  except two small inline scripts (locale redirect, contact form)
+- **Framework:** [Astro 5](https://astro.build) — static output, no client
+  framework; the only client JS is three small scripts (locale redirect,
+  contact form, Umami analytics)
+- **Forms:** [Web3Forms](https://web3forms.com) — no backend
+- **Analytics:** [Umami Cloud](https://umami.is) — cookieless, privacy-friendly
 - **Styling:** [Tailwind CSS 4](https://tailwindcss.com) via `@tailwindcss/vite`,
   with brand tokens declared in `@theme`
 - **Package manager:** pnpm
 - **Node:** 18.20.8, ^20.3, or >=22
+
+**Contents:** [Quick start](#quick-start) ·
+[Environment](#environment) · [Project structure](#project-structure) ·
+[i18n](#internationalisation) · [Content](#content) ·
+[Contact form](#contact-form) · [Analytics](#analytics) ·
+[Parked sections](#parked-sections) · [Deploying](#deploying) ·
+[Known gaps](#known-gaps)
 
 ---
 
@@ -194,6 +204,27 @@ field rides along so you can see which language a lead came from.
 
 ---
 
+## Analytics
+
+[Umami](https://umami.is) is loaded from `src/layouts/Layout.astro`, so every
+page in both locales is tracked:
+
+```html
+<script is:inline defer src="https://cloud.umami.is/script.js"
+        data-website-id="…"></script>
+```
+
+- `is:inline` is required — without it Astro bundles the script and can drop
+  the `data-website-id` attribute.
+- The website ID is public by design (it ships in the HTML), so it is
+  hardcoded rather than read from the environment.
+- It is cookieless, so no consent banner is needed for it.
+- To verify locally, open the Network tab and look for `script.js` from
+  `cloud.umami.is`, then check the Umami dashboard for the visit.
+- Track custom events with `data-umami-event="name"` on any element.
+
+---
+
 ## Parked sections
 
 Some sections are built but commented out until the real content exists. Each
@@ -230,4 +261,6 @@ it is a single line, and its import is still live.
 - The `outcome` lines in `src/data/work.ts` are drafts written from each brief —
   they need real metrics before publishing.
 - `package.json` has an empty `name`.
+- Umami runs on every environment, including local dev and preview deploys,
+  which pollutes the stats. Gate it on `import.meta.env.PROD` if that matters.
 - No typecheck, lint, or test setup.
