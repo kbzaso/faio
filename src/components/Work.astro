@@ -6,58 +6,49 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const works = resolveWorks(lang);
 ---
-<section id="work" class="px-6 md:px-12 py-28">
+<section id="work" class="px-6 md:px-12 py-24 md:py-32 border-t border-piedra">
   <div class="max-w-6xl mx-auto">
-    <!-- Header -->
-    <div class="flex items-end justify-between mb-16">
-      <div>
-        <p class="text-xs tracking-[0.3em] uppercase text-muted mb-3">{t.work.eyebrow}</p>
-        <h2 class="font-display font-bold text-[clamp(1.5rem,5vw,3.5rem)] text-crema leading-tight">
-          {t.work.titleLine1}<br />{t.work.titleLine2}
-        </h2>
-      </div>
-      <p class="hidden md:block max-w-xs text-muted-2 text-sm leading-relaxed text-right">
-        {t.work.note}
-      </p>
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14 md:mb-20">
+      <h2 data-reveal class="display text-[clamp(2rem,5.5vw,4.25rem)] text-ink max-w-2xl">
+        {t.work.titleLine1}<br />{t.work.titleLine2}
+      </h2>
+      <p data-reveal class="max-w-xs text-ink-2 leading-relaxed">{t.work.note}</p>
     </div>
 
-    <!-- Work grid -->
-    <div class="grid md:grid-cols-3 gap-4">
+    <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
       {works.map((w, i) => (
-        <a
-          href={localizePath(`/work/${w.slug}`, lang)}
-          class="group relative rounded-2xl overflow-hidden cursor-pointer block"
-          style={`background: ${w.color};`}
-        >
-          <!-- Placeholder image area -->
-          <div class="h-72 flex items-center justify-center relative overflow-hidden">
-            <div
-              class="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity duration-500"
-              style={`background: radial-gradient(circle at 30% 60%, ${w.accent}, transparent 70%);`}
-            ></div>
-            <span
-              class="font-display font-extrabold text-[5rem] leading-none select-none opacity-10 group-hover:opacity-15 transition-opacity"
-              style={`color: ${w.accent};`}
-            >{w.title[0]}</span>
-          </div>
-
-          <!-- Content -->
-          <div class="p-7">
-            <div class="flex items-center justify-between mb-4">
-              <span class="text-xs tracking-widest uppercase text-muted">{w.tag}</span>
-              <span class="text-xs text-muted-2">{String(i + 1).padStart(2, "0")}</span>
+        <li data-reveal class:list={[i === 0 && 'lg:col-span-2']}>
+          <a
+            href={localizePath(`/work/${w.slug}`, lang)}
+            class="group flex flex-col h-full rounded-2xl border border-line bg-surface overflow-hidden transition-[transform,border-color,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:border-ink hover:shadow-[0_18px_40px_-24px_rgba(44,44,42,0.45)] focus-visible:-translate-y-1"
+          >
+            <!-- Cover: the same image (and transition name) as the case-study hero,
+                 so the browser morphs it from card to page. -->
+            <div class:list={['relative overflow-hidden bg-piedra', i === 0 ? 'aspect-[4/3] lg:aspect-[16/7]' : 'aspect-[4/3]']} style={`view-transition-name: work-${w.slug}`}>
+              <img
+                src={w.image}
+                alt=""
+                width="1600"
+                height="900"
+                loading={i < 3 ? 'eager' : 'lazy'}
+                decoding="async"
+                class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+              />
+              <span class="mark tabular absolute top-4 right-5 text-lg text-crema drop-shadow-[0_1px_6px_rgba(0,0,0,0.6)]">{String(i + 1).padStart(2, '0')}</span>
             </div>
-            <h3 class="font-display font-bold text-2xl text-crema mb-1">{w.title}</h3>
-            <p class="text-sm text-muted mb-5">{w.type}</p>
-            <p class="text-sm text-muted-2 leading-relaxed border-t border-white/5 pt-5">{w.outcome}</p>
-          </div>
 
-          <!-- Hover CTA -->
-          <div class="absolute top-5 right-5 opacity-0 group-hover:opacity-100 transition-opacity">
-            <span class="text-xs px-3 py-1.5 rounded-full bg-white/10 text-crema backdrop-blur-sm">{t.work.viewCase}</span>
-          </div>
-        </a>
+            <div class="flex flex-col flex-1 p-6">
+              <p class="text-sm font-medium text-ink-2 mb-3">{w.tag}</p>
+              <h3 class="display text-3xl text-ink mb-2 !leading-tight">{w.title}</h3>
+              <p class="text-ink-2 leading-relaxed mb-6 line-clamp-3">{w.type}</p>
+              <span class="mt-auto inline-flex items-center gap-2 text-sm font-semibold text-link">
+                {t.work.viewCase.replace(/\s*→\s*$/, '')}
+                <svg class="transition-transform duration-300 group-hover:translate-x-1" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </a>
+        </li>
       ))}
-    </div>
+    </ul>
   </div>
 </section>

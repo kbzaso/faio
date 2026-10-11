@@ -13,6 +13,9 @@ export type Work = {
   type: Localized;
   tag: Localized;
   outcome: Localized;
+  /** Cover image, shared by the home card and the case-study hero. */
+  image: string;
+  /** Fallback behind the image while it loads. */
   color: string;
   accent: string;
 };
@@ -40,6 +43,7 @@ export const works: Work[] = [
       en: "Full ecommerce and ticketing platform for pro-wrestling in Chile. Increased sales, cut operating costs and took ownership of every step of the fan experience.",
       es: "Plataforma completa de ecommerce y ticketing para lucha libre profesional en Chile. Aumentó las ventas, redujo los costos operativos y tomó control de cada etapa de la experiencia del fan.",
     },
+    image: "/work/5lc.webp", // TODO: replace studio placeholder with the real project cover
     color: "#231a10",
     accent: "#D85A30",
   },
@@ -58,6 +62,7 @@ export const works: Work[] = [
       en: "Real-time ticket validation and payment control system for live events, replacing a manual door process with instant verification.",
       es: "Sistema de validación de entradas y control de pagos en tiempo real para eventos en vivo, que reemplazó el control manual en puerta por verificación instantánea.",
     },
+    image: "/work/ticket-validator.webp", // TODO: replace studio placeholder with the real project cover
     color: "#1f1009",
     accent: "#EF9F27",
   },
@@ -76,6 +81,7 @@ export const works: Work[] = [
       en: "Site for a wrestling training center: class booking, full service catalogue and trainer profiles in one place.",
       es: "Sitio para un centro de entrenamiento de lucha libre: reserva de clases, catálogo completo de servicios y perfiles de entrenadores en un solo lugar.",
     },
+    image: "/work/boveda-secreta.webp", // TODO: replace studio placeholder with the real project cover
     color: "#1a1208",
     accent: "#D85A30",
   },
@@ -94,6 +100,7 @@ export const works: Work[] = [
       en: "Landing page for an independent travel agent — presents her services and turns visits into direct contact requests.",
       es: "Landing page para una agente de viajes independiente — presenta sus servicios y convierte las visitas en solicitudes de contacto directo.",
     },
+    image: "/work/viviana-palominos.webp", // TODO: replace studio placeholder with the real project cover
     color: "#231a10",
     accent: "#EF9F27",
   },
@@ -112,6 +119,7 @@ export const works: Work[] = [
       en: "Corporate landing page for a civil engineering and architecture firm, presenting their services and a direct contact channel.",
       es: "Landing page corporativa para una empresa de ingeniería civil y arquitectura, que presenta sus servicios y un canal de contacto directo.",
     },
+    image: "/work/vge.webp", // TODO: replace studio placeholder with the real project cover
     color: "#1f1009",
     accent: "#D85A30",
   },

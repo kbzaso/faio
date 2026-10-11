@@ -1,0 +1,13 @@
+---
+// FAIO wordmark as outlined paths (Bricolage Grotesque 700, tracking -0.035em),
+// so the logo never depends on a webfont. Colour follows `currentColor`.
+import raw from '../assets/logo.svg?raw';
+
+interface Props {
+  class?: string;
+}
+
+const { class: cls = '' } = Astro.props;
+const svg = raw.replace('<svg ', `<svg class="block w-auto ${cls}" `);
+---
+<Fragment set:html={svg} />

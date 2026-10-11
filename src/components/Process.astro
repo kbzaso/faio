@@ -4,34 +4,26 @@ import { getLangFromUrl, useTranslations } from '../i18n';
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
-<section id="process" class="px-6 md:px-12 py-28 bg-panel/30">
+<section id="process" class="on-dark px-6 md:px-12 py-24 md:py-32">
   <div class="max-w-6xl mx-auto">
-    <!-- Header -->
-    <div class="mb-16">
-      <p class="text-xs tracking-[0.3em] uppercase text-muted mb-3">{t.process.eyebrow}</p>
-      <h2 class="font-display font-bold text-[clamp(1.5rem,5vw,3.5rem)] text-crema leading-tight">
-        {t.process.titleLine1}<br />{t.process.titleLine2}
-      </h2>
-    </div>
+    <h2 data-reveal class="display text-[clamp(2rem,5.5vw,4.25rem)] max-w-3xl mb-16 md:mb-24">
+      {t.process.titleLine1}<br />{t.process.titleLine2}
+    </h2>
 
-    <!-- Steps -->
-    <div class="grid md:grid-cols-4 gap-px bg-panel">
+    <!-- La secuencia sí informa: cada etapa depende de la anterior. -->
+    <ol class="grid md:grid-cols-4 gap-x-8 gap-y-14">
       {t.process.steps.map((s) => (
-        <div class="bg-antracita p-8 group hover:bg-panel transition-colors duration-300">
-          <div class="text-tierra font-display font-bold text-5xl mb-8 leading-none">{s.num}</div>
-          <h3 class="font-display font-bold text-xl text-crema mb-4">{s.title}</h3>
-          <p class="text-sm text-muted-2 leading-relaxed mb-8">{s.desc}</p>
-          <div class="flex items-center gap-2">
-            <div class="w-1.5 h-1.5 rounded-full bg-tierra animate-pulse-dot"></div>
-            <span class="text-xs text-muted tracking-wide">{s.duration}</span>
-          </div>
-        </div>
+        <li data-reveal class="border-t border-line pt-6">
+          <p class="mark tabular text-tierra text-6xl mb-8">{s.num}</p>
+          <h3 class="display text-2xl mb-4 !leading-tight">{s.title}</h3>
+          <p class="text-[0.95rem] text-ink-2 leading-relaxed mb-6">{s.desc}</p>
+          <p class="text-xs font-medium tracking-wide text-ink-2 tabular">{s.duration}</p>
+        </li>
       ))}
-    </div>
+    </ol>
 
-    <!-- Bottom note -->
-    <p class="mt-8 text-sm text-muted text-center">
-      {t.process.footnote.pre}<span class="text-crema">{t.process.footnote.strong}</span>{t.process.footnote.post}
+    <p data-reveal class="mt-20 text-ink-2 max-w-xl">
+      {t.process.footnote.pre}<span class="text-link font-semibold">{t.process.footnote.strong}</span>{t.process.footnote.post}
     </p>
   </div>
 </section>

@@ -1,0 +1,319 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const colors = [
+  { name: 'Crema roto', token: 'crema', hex: '#F1EFE8', role: 'Base', share: '~60%', use: 'Fondos y superficies. Papel, no blanco puro: cercanía sin frialdad.', ink: '#2C2C2A' },
+  { name: 'Antracita', token: 'antracita', hex: '#2C2C2A', role: 'Estructura', share: '~30%', use: 'Texto, estructura, CTA principal y secciones inversas.', ink: '#F1EFE8' },
+  { name: 'Tierra quemada', token: 'tierra', hex: '#D85A30', role: 'Acento', share: '~8%', use: 'Énfasis, CTA secundario, numeración. Criterio con temperatura.', ink: '#2C2C2A' },
+  { name: 'Fractura dorada', token: 'fractura', hex: '#EF9F27', role: 'Firma', share: '≤2%', use: 'La grieta: líneas, subrayados, el insight clave. Nunca superficie grande.', ink: '#2C2C2A' },
+];
+const support = [
+  { name: 'Piedra', token: 'piedra', hex: '#D3D1C7', use: 'Bordes, divisores, superficies secundarias sobre crema', ink: '#2C2C2A' },
+  { name: 'Ceniza', token: 'ceniza', hex: '#5F5E5A', use: 'Texto secundario, metadatos', ink: '#F1EFE8' },
+  { name: 'Tierra profunda', token: 'tierra-profunda', hex: '#993C1D', use: 'Links y texto de acento sobre fondo claro', ink: '#F1EFE8' },
+  { name: 'Grafito', token: 'grafito', hex: '#444441', use: 'Superficies elevadas sobre antracita (modo oscuro)', ink: '#F1EFE8' },
+];
+const semantic = [
+  ['surface', 'bg.default', 'crema roto', '#F1EFE8', 'antracita en .on-dark'],
+  ['surface-raised', 'bg.subtle / inverse-raised', 'piedra', '#D3D1C7', 'grafito en .on-dark'],
+  ['ink', 'text.primary / inverse', 'antracita', '#2C2C2A', 'crema roto en .on-dark'],
+  ['ink-2', 'text.secondary', 'ceniza', '#5F5E5A', 'gris cálido #B9B7AD en .on-dark'],
+  ['link', 'text.accent', 'tierra profunda', '#322f2eff', 'fractura dorada en .on-dark'],
+  ['line', 'border.default', 'piedra', '#D3D1C7', 'grafito en .on-dark'],
+  ['signature', 'signature', 'fractura dorada', '#EF9F27', 'igual en ambos modos'],
+];
+const contrast = [
+  ['Antracita sobre crema roto', '12.2:1', 'Todo texto (AAA)', true],
+  ['Ceniza sobre crema roto', '5.6:1', 'Texto secundario (AA)', true],
+  ['Tierra profunda sobre crema roto', '6.1:1', 'Links y texto de acento (AA)', true],
+  ['Fractura dorada sobre antracita', '6.4:1', 'Texto destacado en oscuro (AA)', true],
+  ['Antracita sobre tierra quemada', '3.6:1', 'Solo texto grande/bold o UI (AA large)', true],
+  ['Tierra quemada sobre crema roto', '3.4:1', 'Solo texto grande, íconos, gráficos', true],
+  ['Fractura dorada sobre crema roto', '1.9:1', 'Nunca texto. Solo líneas y gráficos', false],
+];
+const type = [
+  { label: 'Display XL', spec: 'Bricolage Grotesque 700 · clamp(2.5rem, 9.2vw, 8rem) · -0.035em · 0.98', cls: 'display text-[clamp(2.5rem,7vw,5.5rem)]', sample: 'Marcas que se sostienen' },
+  { label: 'Display L', spec: 'Bricolage Grotesque 700 · clamp(2rem, 5.5vw, 4.25rem) · -0.035em', cls: 'display text-[clamp(2rem,4.5vw,3.5rem)]', sample: 'Un proceso hecho para reducir riesgos' },
+  { label: 'Título', spec: 'Bricolage Grotesque 700 · 1.5–2.25rem · -0.035em', cls: 'display text-3xl', sample: 'Identidad de marca' },
+  { label: 'Cuerpo L', spec: 'Hanken Grotesk 400 · 1.125–1.25rem · 1.6 · 65–75ch', cls: 'text-xl leading-relaxed', sample: 'Diseñamos identidades que funcionan como sistema: reglas claras para que la marca se mantenga coherente en cada punto de contacto.' },
+  { label: 'Cuerpo', spec: 'Hanken Grotesk 400 · 1rem · 1.6', cls: 'text-base leading-relaxed text-ceniza', sample: 'Primero entendemos el problema; la forma viene después. Cada decisión visual responde a una pregunta estratégica.' },
+  { label: 'Manuscrita', spec: 'Caveat 700 · 1.22em sobre el display · una sola frase por pieza, la que lleva el oro', cls: 'hand text-6xl text-tierra-profunda', sample: 'es decoración.' },
+  { label: 'Dato', spec: 'JetBrains Mono 500 · 0.75rem · solo para tokens, medidas y código', cls: 'font-mono text-xs', sample: 'color.signature → #EF9F27' },
+];
+const principles = [
+  ['Estrategia antes que estética', 'Cada decisión visual responde a una pregunta. Si no tiene porqué, no va.'],
+  ['Un solo punto de oro', 'En cada pieza hay una idea central. El oro la marca; nada más brilla.'],
+  ['El oro es línea, no superficie', 'Filetes, subrayados y trazos de 1–2px. Nunca un fondo, nunca un botón.'],
+  ['Sistemas, no piezas', 'Reglas que sostienen la marca aunque la aplique otro equipo.'],
+];
+const dont = [
+  'Blanco puro (#FFFFFF) o negro puro (#000000).',
+  'Azules corporativos y verdes “startup”.',
+  'Fractura dorada como texto sobre crema (1.9:1).',
+  'Más de un dorado por pieza.',
+  'Tierra quemada compitiendo con la estructura.',
+  'Plantillas intercambiables entre clientes.',
+];
+const nav = [
+  ['principios', 'Principios'], ['color', 'Color'], ['tokens', 'Tokens'], ['contraste', 'Contraste'],
+  ['tipografia', 'Tipografía'], ['componentes', 'Componentes'], ['movimiento', 'Movimiento'], ['reglas', 'Reglas'],
+];
+---
+<Layout title="Sistema de diseño — FAIO" description="Tokens, color, tipografía y componentes de la identidad FAIO." noindex htmlLang="es">
+  <header data-nav class="site-nav on-dark fixed top-0 inset-x-0 z-50 backdrop-blur-md border-b border-line text-ink px-6 md:px-12 py-4 flex items-center justify-between">
+    <a href="/" class="display text-2xl" aria-label="FAIO — inicio">FAIO</a>
+    <nav class="hidden lg:flex gap-7 text-sm font-medium text-ink-2" aria-label="Secciones del sistema de diseño">
+      {nav.map(([id, label]) => <a href={`#${id}`} class="hover:text-ink transition-colors">{label}</a>)}
+    </nav>
+    <a href="/" class="text-sm font-medium text-link underline underline-offset-4">Volver al sitio</a>
+  </header>
+
+  <main>
+    <!-- Portada -->
+    <section class="px-6 md:px-12 pt-40 pb-20 md:pb-28">
+      <div data-reveal class="max-w-6xl mx-auto">
+        <h1 class="display text-[clamp(2.75rem,9vw,7.5rem)] max-w-5xl">
+          Sistema de diseño<br />
+          <span class="relative inline-block">FAIO
+            <svg class="absolute left-0 -bottom-[0.1em] w-full h-[0.18em] overflow-visible" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true">
+              <path class="crack" pathLength="1" d="M0 6 L18 3 L30 7 L52 2.5 L66 6.5 L84 3 L100 5" fill="none" stroke="#EF9F27" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" />
+            </svg>
+          </span>
+        </h1>
+        <p class="mt-10 max-w-2xl text-xl text-ceniza leading-relaxed">
+          Las reglas con las que se construye este sitio. Nacen del kintsugi: una base sobria y material,
+          y una sola línea dorada que marca el porqué.
+        </p>
+      </div>
+    </section>
+
+    <!-- Principios -->
+    <section id="principios" class="px-6 md:px-12 py-20 border-t border-piedra scroll-mt-20">
+      <div data-reveal class="max-w-6xl mx-auto grid md:grid-cols-[1fr_2fr] gap-10 md:gap-20">
+        <h2 class="display text-4xl">Principios</h2>
+        <ul class="grid sm:grid-cols-2 gap-x-10 gap-y-10">
+          {principles.map(([t, d]) => (
+            <li>
+              <h3 class="display text-xl mb-2 !leading-tight">{t}</h3>
+              <p class="text-ceniza leading-relaxed">{d}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- Color -->
+    <section id="color" class="px-6 md:px-12 py-20 border-t border-piedra scroll-mt-20">
+      <div data-reveal class="max-w-6xl mx-auto">
+        <h2 class="display text-4xl mb-4">Color</h2>
+        <p class="text-ceniza max-w-2xl mb-12">Proporción 60 / 30 / 8 / 2. La paleta no decora: jerarquiza.</p>
+
+        <!-- Proporción real, a escala -->
+        <div class="flex h-14 rounded-lg overflow-hidden border border-piedra mb-3" role="img" aria-label="Proporción de uso: crema 60, antracita 30, tierra 8, dorado 2">
+          <div class="bg-crema" style="flex:60"></div>
+          <div class="bg-antracita" style="flex:30"></div>
+          <div class="bg-tierra" style="flex:8"></div>
+          <div class="bg-fractura" style="flex:2"></div>
+        </div>
+        <p class="font-mono text-xs text-ceniza mb-14 tabular">60 · 30 · 8 · 2</p>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-14">
+          {colors.map((c) => (
+            <article class="rounded-xl overflow-hidden border border-piedra bg-crema">
+              <div class="h-36 p-4 flex items-end justify-between" style={`background:${c.hex};color:${c.ink}`}>
+                <span class="display text-2xl !leading-none">{c.share}</span>
+                <span class="text-sm font-semibold">{c.role}</span>
+              </div>
+              <div class="p-4">
+                <h3 class="font-semibold">{c.name}</h3>
+                <p class="font-mono text-xs text-ceniza mt-1 mb-3">{c.hex} · {c.token}</p>
+                <p class="text-sm text-ceniza leading-relaxed">{c.use}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <h3 class="display text-2xl mb-6">Apoyo</h3>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {support.map((c) => (
+            <article class="rounded-xl overflow-hidden border border-piedra">
+              <div class="h-20" style={`background:${c.hex}`}></div>
+              <div class="p-4">
+                <h4 class="font-semibold">{c.name}</h4>
+                <p class="font-mono text-xs text-ceniza mt-1 mb-2">{c.hex} · {c.token}</p>
+                <p class="text-sm text-ceniza leading-relaxed">{c.use}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Tokens -->
+    <section id="tokens" class="px-6 md:px-12 py-20 border-t border-piedra scroll-mt-20">
+      <div data-reveal class="max-w-6xl mx-auto">
+        <h2 class="display text-4xl mb-4">Tokens semánticos</h2>
+        <p class="text-ceniza max-w-2xl mb-12">Se nombran por rol, no por valor. Una sección con la clase <code class="font-mono text-sm text-tierra-profunda">.on-dark</code> reasigna los roles; los componentes no cambian.</p>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm min-w-[40rem]">
+            <thead>
+              <tr class="border-b border-antracita text-ceniza">
+                <th class="py-3 pr-6 font-medium">Token</th><th class="py-3 pr-6 font-medium">Rol (Figma)</th>
+                <th class="py-3 pr-6 font-medium">Claro</th><th class="py-3 font-medium">Oscuro</th>
+              </tr>
+            </thead>
+            <tbody>
+              {semantic.map(([token, role, name, hex, dark]) => (
+                <tr class="border-b border-piedra">
+                  <td class="py-4 pr-6 font-mono text-[0.8rem]">--{token}</td>
+                  <td class="py-4 pr-6 font-mono text-[0.8rem] text-ceniza">{role}</td>
+                  <td class="py-4 pr-6"><span class="inline-flex items-center gap-3"><span class="w-5 h-5 rounded border border-piedra" style={`background:${hex}`}></span>{name}</span></td>
+                  <td class="py-4 text-ceniza">{dark}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-14 grid md:grid-cols-2 gap-5">
+          <div class="rounded-xl p-8 border border-piedra">
+            <p class="display text-3xl mb-3">Modo claro</p>
+            <p class="text-ceniza mb-4">Texto principal sobre crema roto. Secundario en ceniza.</p>
+            <a href="#tokens" class="text-link underline underline-offset-4 font-medium">Link en tierra profunda</a>
+          </div>
+          <div class="on-dark rounded-xl p-8">
+            <p class="display text-3xl mb-3">Modo oscuro</p>
+            <p class="text-ink-2 mb-4">Antracita como base. Grafito para superficies elevadas.</p>
+            <a href="#tokens" class="text-link underline underline-offset-4 font-medium">Link en fractura dorada</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contraste -->
+    <section id="contraste" class="px-6 md:px-12 py-20 border-t border-piedra scroll-mt-20">
+      <div data-reveal class="max-w-6xl mx-auto">
+        <h2 class="display text-4xl mb-12">Contraste (WCAG)</h2>
+        <ul class="border-t border-antracita">
+          {contrast.map(([pair, ratio, use, ok]) => (
+            <li class="grid sm:grid-cols-[3fr_1fr_3fr] gap-2 sm:gap-6 py-4 border-b border-piedra items-baseline">
+              <span class="font-medium">{pair}</span>
+              <span class:list={['display text-2xl tabular', ok ? 'text-antracita' : 'text-tierra-profunda']}>{ratio}</span>
+              <span class:list={[ok ? 'text-ceniza' : 'text-tierra-profunda font-semibold']}>{use}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- Tipografía -->
+    <section id="tipografia" class="px-6 md:px-12 py-20 border-t border-piedra scroll-mt-20">
+      <div data-reveal class="max-w-6xl mx-auto">
+        <h2 class="display text-4xl mb-4">Tipografía</h2>
+        <p class="text-ceniza max-w-2xl mb-14">Dos voces: Bricolage Grotesque para decidir, Hanken Grotesk para explicar. Medida de lectura de 65 a 75 caracteres; números tabulares en datos.</p>
+        <div class="space-y-12">
+          {type.map((s) => (
+            <div class="grid md:grid-cols-[1fr_2fr] gap-4 md:gap-12 items-baseline border-t border-piedra pt-6">
+              <div>
+                <p class="font-semibold">{s.label}</p>
+                <p class="font-mono text-xs text-ceniza mt-1 leading-relaxed">{s.spec}</p>
+              </div>
+              <p class={s.cls + ' max-w-[70ch]'}>{s.sample}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Componentes -->
+    <section id="componentes" class="px-6 md:px-12 py-20 border-t border-piedra scroll-mt-20">
+      <div data-reveal class="max-w-6xl mx-auto space-y-16">
+        <div>
+          <h2 class="display text-4xl mb-12">Componentes</h2>
+
+          <h3 class="display text-2xl mb-6">Botones</h3>
+          <div class="grid md:grid-cols-2 gap-5">
+            <div class="rounded-xl border border-piedra p-8">
+              <div class="flex flex-wrap gap-4 mb-6">
+                <button class="btn btn-primary">Principal</button>
+                <button class="btn btn-ghost">Secundario</button>
+                <button class="btn btn-primary" disabled>Deshabilitado</button>
+              </div>
+              <p class="text-sm text-ceniza">Principal en antracita; al pasar el cursor toma tierra quemada con texto antracita. El dorado nunca es un botón.</p>
+            </div>
+            <div class="on-dark rounded-xl p-8">
+              <div class="flex flex-wrap gap-4 mb-6">
+                <button class="btn bg-crema text-antracita hover:bg-tierra">Principal</button>
+                <button class="btn" style="box-shadow: inset 0 0 0 1px #F1EFE8">Secundario</button>
+              </div>
+              <p class="text-sm text-ink-2">Sobre antracita, el principal invierte: crema con texto antracita.</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="display text-2xl mb-6">Campos de formulario</h3>
+          <div class="on-dark rounded-xl p-8 grid md:grid-cols-2 gap-6">
+            <div class="flex flex-col gap-2">
+              <label class="text-sm font-medium" for="ds-name">Nombre</label>
+              <input id="ds-name" class="bg-surface-raised border border-line rounded-lg px-4 py-3.5 text-base focus:outline-none focus:border-fractura transition-colors" placeholder="Tu nombre" />
+              <p class="text-sm text-ink-2">Foco: borde dorado de 1px, la grieta que se abre.</p>
+            </div>
+            <div class="flex flex-col gap-2">
+              <label class="text-sm font-medium" for="ds-mail">Correo</label>
+              <input id="ds-mail" aria-invalid="true" value="nombre@" class="bg-surface-raised border border-tierra rounded-lg px-4 py-3.5 text-base focus:outline-none" />
+              <p class="text-sm text-tierra">Escribe un correo válido, por ejemplo nombre@empresa.cl.</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="display text-2xl mb-6">La grieta</h3>
+          <div class="rounded-xl border border-piedra p-8 md:p-12">
+            <p class="display text-4xl md:text-5xl mb-8 max-w-2xl">Una idea central, <span class="relative inline-block">marcada en oro.
+              <svg class="absolute left-0 -bottom-[0.12em] w-full h-[0.2em] overflow-visible" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M0 6 L16 3 L28 7 L50 2.5 L64 6.5 L82 3 L100 5" fill="none" stroke="#EF9F27" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" />
+              </svg></span>
+            </p>
+            <p class="text-ceniza max-w-xl">Trazo de 2–3px, irregular, sobre una sola frase o dato por pieza. Es el único uso del dorado sobre crema.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Movimiento -->
+    <section id="movimiento" class="on-dark px-6 md:px-12 py-20 scroll-mt-20">
+      <div data-reveal class="max-w-6xl mx-auto grid md:grid-cols-[1fr_2fr] gap-10 md:gap-20">
+        <h2 class="display text-4xl">Movimiento</h2>
+        <div class="space-y-5 text-ink-2 text-lg leading-relaxed max-w-2xl">
+          <p><span class="text-ink font-semibold">El dorado aparece dibujándose.</span> Es el único momento de movimiento protagonista: la reparación kintsugi en pantalla.</p>
+          <p>Entradas de 0.9s con <code class="font-mono text-sm text-link">cubic-bezier(0.16, 1, 0.3, 1)</code>, desde un estado ya visible. Con <code class="font-mono text-sm text-link">prefers-reduced-motion</code> todo queda en su estado final.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reglas -->
+    <section id="reglas" class="px-6 md:px-12 py-20 scroll-mt-20">
+      <div data-reveal class="max-w-6xl mx-auto grid md:grid-cols-2 gap-14">
+        <div>
+          <h2 class="display text-4xl mb-8">Qué evitamos</h2>
+          <ul class="space-y-3">
+            {dont.map((d) => <li class="flex gap-4 items-baseline"><span class="w-3 h-px bg-tierra shrink-0 translate-y-[-0.3em]"></span>{d}</li>)}
+          </ul>
+        </div>
+        <div>
+          <h2 class="display text-4xl mb-8">Voz</h2>
+          <p class="text-ceniza mb-3 line-through decoration-tierra">Creamos marcas increíbles que conectan con tu audiencia.</p>
+          <p class="text-lg leading-relaxed">Diseñamos identidades que funcionan como sistema: reglas claras para que la marca se mantenga coherente en cada punto de contacto, aunque la aplique otro equipo.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="on-dark px-6 md:px-12 py-10">
+    <div data-reveal class="max-w-6xl mx-auto flex flex-wrap justify-between gap-4 text-sm text-ink-2">
+      <span><span class="display text-xl text-ink mr-3">FAIO</span>Sistema de diseño · v1</span>
+      <a href="/" class="text-link underline underline-offset-4">Volver al sitio</a>
+    </div>
+  </footer>
+</Layout>

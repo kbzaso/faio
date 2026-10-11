@@ -1,41 +1,68 @@
 @import "tailwindcss";
 
-/* ── Brand tokens ── */
+/* ── Paleta FAIO ──────────────────────────────────────────────
+   Nace del kintsugi: base material (papel, carbón, tierra) y una
+   sola línea dorada que marca el porqué. Proporción 60 / 30 / 8 / 2.
+   Sin #FFFFFF ni #000000. */
 @theme {
-  /* Tierra quemada — primary brand color */
-  --color-tierra: #D85A30;
-  --color-tierra-dark: #be4e28;
-  /* Fractura dorada — accent, CTAs only */
-  --color-fractura: #EF9F27;
-  --color-fractura-dark: #d4891a;
-  /* Antracita — dark foundations */
-  --color-antracita: #2C2C2A;
-  --color-panel: #343431;
-  --color-panel-2: #3c3c39;
-  --color-frame: #444441;
-  /* Crema roto — text */
-  --color-crema: #F1EFE8;
-  --color-muted: #909090;
-  --color-muted-2: #a0a09a;
+  --color-crema: #F1EFE8;        /* Crema roto — base, ~60% */
+  --color-antracita: #2C2C2A;    /* Antracita — estructura, ~30% */
+  --color-tierra: #D85A30;       /* Tierra quemada — acento, ~8% */
+  --color-fractura: #EF9F27;     /* Fractura dorada — firma, ≤2%. Línea, nunca superficie */
+  --color-piedra: #D3D1C7;       /* Piedra — bordes y divisores */
+  --color-ceniza: #5F5E5A;       /* Ceniza — texto secundario */
+  --color-tierra-profunda: #993C1D; /* Tierra profunda — links sobre claro */
+  --color-grafito: #444441;      /* Grafito — superficies elevadas en oscuro */
 
-  /* Typography */
-  --font-display: 'Syne', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --font-display: 'Germania One', 'Hanken Grotesk Variable', serif;
+  --font-body: 'Hanken Grotesk Variable', 'Hanken Grotesk', 'Helvetica Neue', sans-serif;
+  --font-hand: var(--font-display);
+  --font-mark: 'Bitcount Single Variable', 'JetBrains Mono', monospace;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
-  /* Animations */
-  --animate-marquee: marquee 30s linear infinite;
-  --animate-pulse-dot: pulse-dot 2s ease-in-out infinite;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+/* inline: las utilidades leen la variable en cada elemento, no en :root,
+   así .on-dark puede reasignar los roles. */
+@theme inline {
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-line: var(--line);
+  --color-link: var(--link);
 }
 
-@keyframes pulse-dot {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%       { opacity: 0.5; transform: scale(0.8); }
+:root {
+  --surface: #F1EFE8;
+  --surface-raised: #D3D1C7;
+  --ink: #2C2C2A;
+  --ink-2: #5F5E5A;
+  --line: #D3D1C7;
+  --link: #993C1D;
 }
+
+/* Sección inversa: antracita como base, grafito elevado, el dorado
+   gana protagonismo como texto destacado. */
+.on-dark {
+  --surface: #2C2C2A;
+  --surface-raised: #444441;
+  --ink: #F1EFE8;
+  --ink-2: #B9B7AD;
+  --line: #444441;
+  --link: #EF9F27;
+  background: var(--surface);
+  color: var(--ink);
+}
+
+/* Barra de navegación: contrasta con lo que tiene debajo. Antracita sobre
+   secciones claras (.on-dark por defecto), crema sobre secciones oscuras. */
+.site-nav {
+  background: rgb(241 239 232 / 0.88);
+  transition: background-color 0.35s var(--ease-out), color 0.35s var(--ease-out), border-color 0.35s var(--ease-out);
+}
+.site-nav.on-dark { background: rgb(44 44 42 / 0.88); }
 
 /* ── Base ── */
 @layer base {
@@ -46,37 +73,203 @@
   }
 
   html {
-    background: #2C2C2A;
-    color: #F1EFE8;
-    font-family: 'Inter', sans-serif;
+    background: #F1EFE8;
+    color: #2C2C2A;
+    font-family: var(--font-body);
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
-  body { overflow-x: hidden; }
+  body { overflow-x: hidden; font-feature-settings: "kern", "liga"; }
 
-  /* Long words — Spanish is full of them — must never escape their container.
-     On mobile the contact grid has no explicit column count, so its implicit
-     column sizes to min-content: one long word stretched it and pushed the
-     whole page sideways. On desktop `grid-cols-2` pins the track instead, so
-     the word slid out over the form. `anywhere` is required rather than
-     `break-word` — it is the one that also shrinks min-content width, which is
-     what stops the column stretching. Hyphenation is preferred when it can be
-     applied, so a forced break reads as typography rather than a bug. */
+  /* Palabras largas (el español las tiene) nunca deben escapar de su
+     contenedor. `anywhere` también reduce el min-content, que es lo que
+     evita que la columna del grid se estire. */
   h1, h2, h3 {
     hyphens: auto;
     overflow-wrap: anywhere;
+    text-wrap: balance;
   }
+
+  p { text-wrap: pretty; }
 
   a { color: inherit; text-decoration: none; }
 
   img, svg { display: block; }
+
+  /* Superficies del navegador, con la paleta */
+  ::selection { background: #EF9F27; color: #2C2C2A; }
+
+  :focus-visible {
+    outline: 2px solid var(--link);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::placeholder { color: var(--ink-2); opacity: 0.7; }
+
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: #F1EFE8; }
+  ::-webkit-scrollbar-thumb { background: #D3D1C7; border: 2px solid #F1EFE8; border-radius: 99px; }
+  ::-webkit-scrollbar-thumb:hover { background: #5F5E5A; }
+  html { scrollbar-color: #D3D1C7 #F1EFE8; }
+
+  input, textarea, select { caret-color: #D85A30; }
+}
+
+/* ── Tipografía utilitaria ── */
+.display {
+  font-family: var(--font-display);
+  font-weight: 400; /* Germania One solo tiene un peso */
+  letter-spacing: -0.005em;
+  line-height: 1.02;
+}
+
+/* Énfasis: la misma Germania One de los titulares; lo que la distingue es el
+   color (tierra profunda / oro sobre oscuro) y la grieta dorada debajo. */
+.hand {
+  font-family: var(--font-hand);
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  line-height: 1;
+}
+
+/* Manuscrita de marca (Bitcount Single): números y marcas de secuencia.
+   Es la letra "hecha a mano" del sistema: trazo trabajado pixel a pixel. */
+.mark {
+  font-family: var(--font-mark);
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.tabular { font-variant-numeric: tabular-nums; }
+
+/* ── Botones ──
+   Primario = antracita sobre crema (o crema sobre antracita en oscuro).
+   Acento = tierra con texto antracita, solo ≥18px o bold. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.95rem 1.6rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1;
+  border-radius: 999px;
+  transition: background-color 0.2s, color 0.2s, transform 0.2s var(--ease-out);
+  white-space: nowrap;
+}
+.btn:active { transform: translateY(1px); }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; }
+.btn-primary { background: var(--ink); color: var(--surface); }
+.btn-primary:hover { background: var(--color-tierra); color: #2C2C2A; }
+.btn-ghost { box-shadow: inset 0 0 0 1px var(--ink); color: var(--ink); }
+.btn-ghost:hover { background: var(--ink); color: var(--surface); }
+
+/* ── La grieta ──
+   Trazo dorado que se dibuja: referencia directa a la reparación. */
+.crack {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw-crack 1.4s var(--ease-out) 0.5s forwards;
+}
+@keyframes draw-crack { to { stroke-dashoffset: 0; } }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+.rise { animation: rise 0.9s var(--ease-out) both; }
+.rise-2 { animation-delay: 0.12s; }
+.rise-3 { animation-delay: 0.24s; }
+
+/* ── Revelado al hacer scroll ──
+   Solo se oculta si hay JS (html.js), así que sin JS todo es visible. */
+html.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.9s var(--ease-out) var(--reveal-delay, 0ms),
+    transform 0.9s var(--ease-out) var(--reveal-delay, 0ms);
+}
+html.js [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* Llegada por transición de vista: el contenido ya está, sin segunda entrada. */
+html.no-reveal [data-reveal] {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.js [data-reveal] { opacity: 1; transform: none; transition: none; }
+  .crack { animation: none; stroke-dashoffset: 0; }
+  .rise { animation: none; }
+  html { scroll-behavior: auto; }
+}
+
+/* ── View Transitions (nativas, entre documentos) ──
+   Chrome/Edge/Safari las ejecutan solas; el resto navega sin animación.
+   La página entra con un fundido corto; la barra de navegación persiste y las
+   tarjetas de trabajo se transforman en la cabecera de su caso de estudio
+   (mismo view-transition-name en ambas páginas). */
+@view-transition {
+  navigation: auto;
+}
+
+.site-nav { view-transition-name: site-nav; }
+
+::view-transition-group(*) {
+  animation-duration: 0.7s;
+  animation-timing-function: cubic-bezier(0.45, 0, 0.2, 1);
+}
+::view-transition-group(site-nav) { animation: none; }
+
+/* Las imágenes se mueven con sus esquinas: el grupo recorta con el mismo radio
+   que la tarjeta y la cabecera (rounded-2xl = 1rem), no con el del snapshot. */
+::view-transition-group(*) {
+  overflow: clip;
+  border-radius: 1rem;
+}
+::view-transition-group(root),
+::view-transition-group(site-nav) {
+  overflow: visible;
+  border-radius: 0;
+}
+
+/* La tarjeta y la cabecera tienen proporciones distintas: la imagen se recorta
+   (cover) mientras se mueve en vez de estirarse. */
+::view-transition-old(*),
+::view-transition-new(*) {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+::view-transition-image-pair(*) { isolation: auto; }
+::view-transition-old(root),
+::view-transition-new(root) { object-fit: fill; }
+
+/* Fundido cruzado puro: sin desplazamiento, sin hueco en blanco entre páginas. */
+::view-transition-old(root) { animation: vt-out 0.4s cubic-bezier(0.4, 0, 0.2, 1) both; }
+::view-transition-new(root) { animation: vt-in 0.4s cubic-bezier(0.4, 0, 0.2, 1) both; }
+
+@keyframes vt-out { to { opacity: 0; } }
+@keyframes vt-in { from { opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
 }
 
 /* ── Select arrow (data-URI can't go in a Tailwind class) ── */
 .select-arrow {
-  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23909090' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23B9B7AD' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 1rem center;
 }

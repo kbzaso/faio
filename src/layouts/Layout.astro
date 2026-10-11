@@ -1,17 +1,26 @@
 ---
 import '../styles/global.css';
+import '@fontsource-variable/hanken-grotesk';
+import '@fontsource/germania-one';
+import '@fontsource-variable/bitcount-single';
+import '@fontsource/jetbrains-mono/400.css';
+import '@fontsource/jetbrains-mono/500.css';
 import { getLangFromUrl, useTranslations, switchLang, languages, type Lang } from '../i18n';
 import { localeRedirectScript } from '../i18n/detect';
 
 interface Props {
   title?: string;
   description?: string;
+  /** Internal pages (design system) stay out of search results. */
+  noindex?: boolean;
+  /** Overrides the URL-derived locale for single-language pages. */
+  htmlLang?: string;
 }
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-const { title = t.meta.title, description = t.meta.description } = Astro.props;
+const { title = t.meta.title, description = t.meta.description, noindex = false, htmlLang = lang } = Astro.props;
 
 // Relative hrefs: the production domain isn't configured via `site` yet.
 // Set `site` in astro.config.mjs and these can become absolute URLs.
@@ -21,30 +30,101 @@ const alternates = (Object.keys(languages) as Lang[]).map((code) => ({
 }));
 ---
 <!doctype html>
-<html lang={lang}>
+<html lang={htmlLang}>
   <head>
     <meta charset="UTF-8" />
+    <!-- Marks JS as available so scroll-reveal only hides content when it can show it again. -->
+    <script is:inline>document.documentElement.classList.add('js');</script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
     <title>{title}</title>
 
-    {alternates.map(({ code, href }) => (
+    {!noindex && alternates.map(({ code, href }) => (
       <link rel="alternate" hreflang={code} href={href} />
     ))}
-    <link rel="alternate" hreflang="x-default" href={switchLang(Astro.url, 'en')} />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+    {!noindex && <link rel="alternate" hreflang="x-default" href={switchLang(Astro.url, 'en')} />}
+    <!-- Fonts are self-hosted via @fontsource (imported above): no third-party request, no flash of fallback. -->
 
     <!-- Runs before first paint so a redirected visitor never sees the wrong language. -->
-    <script is:inline set:html={localeRedirectScript} />
+    {!noindex && <script is:inline set:html={localeRedirectScript} />}
 
     <script is:inline defer src="https://cloud.umami.is/script.js" data-website-id="71af548b-115e-42b5-9316-0eaa95c119d7"></script>
   </head>
   <body>
     <slot />
+    <!-- Nav inversion: the bar takes the opposite theme of the surface under it. -->
+    <script is:inline>
+      (function () {
+        var nav = document.querySelector('[data-nav]');
+        if (!nav) return;
+        var ticking = false;
+        function update() {
+          ticking = false;
+          var y = nav.getBoundingClientRect().height / 2;
+          var under = document.elementsFromPoint(window.innerWidth / 2, y)
+            .find(function (el) { return !nav.contains(el); });
+          var dark = !!(under && under.closest('.on-dark'));
+          // Contrast, not match: dark bar over light sections, light bar over dark ones.
+          nav.classList.toggle('on-dark', !dark);
+        }
+        function request() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+        window.addEventListener('scroll', request, { passive: true });
+        window.addEventListener('resize', request);
+        update();
+      })();
+    </script>
+    <!-- Scroll reveal: elements marked [data-reveal] ease in as they enter the
+         viewport. Siblings stagger so a row of steps reads left to right. -->
+    <script is:inline>
+      (function () {
+        // Arriving through a view transition: the page is already animating in,
+        // so its content must be there to be morphed into, not hidden and then popped.
+        window.addEventListener('pagereveal', function (e) {
+          if (e.viewTransition) document.documentElement.classList.add('no-reveal');
+        });
+        var els = document.querySelectorAll('[data-reveal]');
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!els.length || reduce) {
+          document.documentElement.classList.remove('js');
+          return;
+        }
+        els.forEach(function (el) {
+          if (el.style.getPropertyValue('--reveal-delay')) return;
+          var siblings = Array.prototype.filter.call(el.parentElement.children, function (n) {
+            return n.hasAttribute('data-reveal');
+          });
+          var i = siblings.indexOf(el);
+          if (i > 0) el.style.setProperty('--reveal-delay', Math.min(i, 4) * 90 + 'ms');
+        });
+        // A scroll sweep rather than an IntersectionObserver: an observer only fires
+        // when an element changes state, so anything skipped by an anchor jump or a
+        // restored scroll position would stay hidden. Here, everything at or above
+        // the viewport's lower edge is revealed, whichever way it got there.
+        var pending = Array.prototype.slice.call(els);
+        var queued = false;
+        function sweep() {
+          queued = false;
+          var edge = window.innerHeight * 0.92;
+          pending = pending.filter(function (el) {
+            if (el.getBoundingClientRect().top < edge) {
+              el.classList.add('is-revealed');
+              return false;
+            }
+            return true;
+          });
+          if (!pending.length) {
+            window.removeEventListener('scroll', request);
+            window.removeEventListener('resize', request);
+          }
+        }
+        function request() { if (!queued) { queued = true; requestAnimationFrame(sweep); } }
+        window.addEventListener('scroll', request, { passive: true });
+        window.addEventListener('resize', request);
+        sweep();
+      })();
+    </script>
   </body>
 </html>

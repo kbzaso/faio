@@ -9,6 +9,10 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@fontsource-variable/bitcount-single": "^5.3.0",
+    "@fontsource-variable/hanken-grotesk": "^5.3.0",
+    "@fontsource/germania-one": "^5.3.0",
+    "@fontsource/jetbrains-mono": "^5.3.0",
     "@tailwindcss/vite": "^4.2.1",
     "astro": "^5.10.1",
     "tailwindcss": "^4.2.1"

@@ -23,28 +23,27 @@ const subject = lang === 'es'
   : 'New inquiry from faio.cl';
 
 const inputClass =
-  'bg-antracita border border-panel-2 rounded-lg px-4 py-3 text-crema text-sm ' +
-  'placeholder:text-muted focus:outline-none focus:border-tierra transition-colors ' +
+  'bg-surface-raised border border-line rounded-lg px-4 py-3.5 text-ink text-base w-full ' +
+  'focus:outline-none focus:border-fractura transition-colors ' +
   'aria-[invalid=true]:border-tierra';
 ---
-<section id="contact" class="px-6 md:px-12 py-28 bg-panel/30">
+<section id="contact" class="on-dark px-6 md:px-12 py-24 md:py-32">
   <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-start">
     <!-- Left -->
-    <div>
-      <p class="text-xs tracking-[0.3em] uppercase text-muted mb-5">{t.contact.eyebrow}</p>
-      <h2 class="font-display font-bold text-[clamp(1.5rem,3.1vw,2.75rem)] text-crema leading-tight mb-6">
+    <div data-reveal>
+      <h2 class="display text-[clamp(2rem,4.6vw,3.75rem)] mb-8">
         {t.contact.titleLine1}<br />
-        <span class="text-tierra">{t.contact.titleHighlight}</span>
+        <span class="hand text-link">{t.contact.titleHighlight}</span>
       </h2>
-      <p class="text-muted-2 leading-relaxed max-w-md mb-10">
+      <p class="text-ink-2 text-lg leading-relaxed max-w-md mb-10">
         {t.contact.body}
       </p>
 
       <div class="space-y-4 text-sm">
         {t.contact.bullets.map((b) => (
-          <div class="flex items-center gap-3 text-muted">
-            <div class="w-1.5 h-1.5 rounded-full bg-tierra"></div>
-            <span>{b.pre}{b.strong && <span class="text-crema">{b.strong}</span>}{b.post}</span>
+          <div class="flex items-center gap-3 text-ink-2">
+            <div class="w-3 h-px bg-tierra"></div>
+            <span>{b.pre}{b.strong && <span class="text-ink font-semibold">{b.strong}</span>}{b.post}</span>
           </div>
         ))}
       </div>
@@ -53,7 +52,9 @@ const inputClass =
     <!-- Right: Form -->
     <form
       id="contact-form"
-      class="bg-panel rounded-2xl p-8 border border-panel-2"
+      data-reveal
+      style="--reveal-delay:120ms"
+      class="bg-surface-raised/40 rounded-2xl p-6 md:p-8 border border-line"
       novalidate
     >
       <!-- Web3Forms metadata. Never shown, never edited by the visitor. -->
@@ -72,7 +73,7 @@ const inputClass =
       <div class="space-y-5" data-body>
         <div class="grid grid-cols-2 gap-4">
           <div class="flex flex-col gap-2">
-            <label class="text-xs text-muted tracking-wide uppercase" for="name">{f.name}</label>
+            <label class="text-sm font-medium text-ink" for="name">{f.name}</label>
             <input
               id="name"
               name="name"
@@ -83,11 +84,11 @@ const inputClass =
               aria-describedby="name-error"
               class={inputClass}
             />
-            <p id="name-error" class="text-xs text-tierra" data-error-for="name" hidden></p>
+            <p id="name-error" class="text-sm text-tierra" data-error-for="name" hidden></p>
           </div>
           <div class="flex flex-col gap-2">
-            <label class="text-xs text-muted tracking-wide uppercase" for="company">
-              {f.company} <span class="normal-case tracking-normal text-muted/70">({f.optional})</span>
+            <label class="text-sm font-medium text-ink" for="company">
+              {f.company} <span class="text-ink-2 font-normal">({f.optional})</span>
             </label>
             <input
               id="company"
@@ -101,7 +102,7 @@ const inputClass =
         </div>
 
         <div class="flex flex-col gap-2">
-          <label class="text-xs text-muted tracking-wide uppercase" for="email">{f.email}</label>
+          <label class="text-sm font-medium text-ink" for="email">{f.email}</label>
           <input
             id="email"
             name="email"
@@ -112,11 +113,11 @@ const inputClass =
             aria-describedby="email-error"
             class={inputClass}
           />
-          <p id="email-error" class="text-xs text-tierra" data-error-for="email" hidden></p>
+          <p id="email-error" class="text-sm text-tierra" data-error-for="email" hidden></p>
         </div>
 
         <div class="flex flex-col gap-2">
-          <label class="text-xs text-muted tracking-wide uppercase" for="service">{f.service}</label>
+          <label class="text-sm font-medium text-ink" for="service">{f.service}</label>
           <select
             id="service"
             name="service"
@@ -131,11 +132,11 @@ const inputClass =
             {/* hidden-sprint: restore with the Brand Sprint service card */}
             <option value={f.serviceOptions.unsure}>{f.serviceOptions.unsure}</option>
           </select>
-          <p id="service-error" class="text-xs text-tierra" data-error-for="service" hidden></p>
+          <p id="service-error" class="text-sm text-tierra" data-error-for="service" hidden></p>
         </div>
 
         <div class="flex flex-col gap-2">
-          <label class="text-xs text-muted tracking-wide uppercase" for="message">{f.message}</label>
+          <label class="text-sm font-medium text-ink" for="message">{f.message}</label>
           <textarea
             id="message"
             name="message"
@@ -145,7 +146,7 @@ const inputClass =
             aria-describedby="message-error"
             class:list={['resize-none', inputClass]}
           ></textarea>
-          <p id="message-error" class="text-xs text-tierra" data-error-for="message" hidden></p>
+          <p id="message-error" class="text-sm text-tierra" data-error-for="message" hidden></p>
         </div>
 
         <p
@@ -158,19 +159,19 @@ const inputClass =
         <button
           type="submit"
           data-submit
-          class="w-full py-4 bg-fractura text-antracita font-semibold rounded-full hover:bg-fractura-dark transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+          class="btn w-full bg-crema text-antracita hover:bg-tierra"
         >{f.submit}</button>
       </div>
 
       <!-- Swapped in for the fields once the submission lands. -->
       <div class="text-center py-6" data-success tabindex="-1" hidden>
-        <div class="w-12 h-12 rounded-full bg-tierra/15 text-tierra mx-auto mb-5 grid place-items-center text-xl">✓</div>
-        <p class="font-display font-bold text-xl text-crema mb-2">{f.success.title}</p>
-        <p class="text-sm text-muted-2 leading-relaxed max-w-xs mx-auto mb-6">{f.success.body}</p>
+        <div class="w-12 h-12 rounded-full bg-tierra text-antracita mx-auto mb-5 grid place-items-center"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <p class="display text-2xl mb-2">{f.success.title}</p>
+        <p class="text-sm text-ink-2 leading-relaxed max-w-xs mx-auto mb-6">{f.success.body}</p>
         <button
           type="button"
           data-reset
-          class="text-sm text-muted hover:text-crema underline underline-offset-4 transition-colors"
+          class="text-sm text-ink-2 hover:text-ink underline underline-offset-4 transition-colors"
         >{f.success.again}</button>
       </div>
     </form>

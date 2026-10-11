@@ -29,10 +29,10 @@ export const es: Dictionary = {
 
   hero: {
     eyebrow: "Estudio de branding — Estrategia primero",
-    titleLine1: "Marcas que hacen",
-    titleHighlight: "que te elijan",
-    titleLine2: "antes de comparar.",
-    body: "Construimos identidades de marca para empresas ambiciosas — desde el posicionamiento hasta el sistema visual y el lanzamiento. Guiadas por estrategia, ejecutadas con diseño, medidas por resultados.",
+    titleLine1: "Sin estrategia,",
+    titleHighlight: "el diseño es decoración.",
+    titleLine2: "",
+    body: "Sin sistema, la marca se fragmenta. Sin claridad, no hay escalabilidad. Diseñamos identidades que funcionan como sistema: reglas claras para que la marca se mantenga coherente en cada punto de contacto, aunque la aplique otro equipo.",
     ctaPrimary: "Comenzar un proyecto",
     ctaSecondary: "Ver nuestro trabajo",
     scroll: "Desliza",

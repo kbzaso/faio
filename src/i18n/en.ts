@@ -28,10 +28,10 @@ export const en = {
 
   hero: {
     eyebrow: "Branding studio — Strategy-first",
-    titleLine1: "Brands that make",
-    titleHighlight: "people choose you",
-    titleLine2: "before they compare.",
-    body: "We build brand identities for ambitious companies — from positioning to visual system to launch. Strategy-led, design-executed, results-measured.",
+    titleLine1: "Without strategy, design",
+    titleHighlight: "is decoration.",
+    titleLine2: "",
+    body: "Without a system, the brand fragments. Without clarity, there is no scalability. We design identities that work as a system: clear rules that keep the brand coherent at every touchpoint, even when another team applies it.",
     ctaPrimary: "Start a project",
     ctaSecondary: "See our work",
     scroll: "Scroll",

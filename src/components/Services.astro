@@ -4,111 +4,36 @@ import { getLangFromUrl, useTranslations } from '../i18n';
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-// Which card gets the highlight treatment — presentation, so it lives here
-// rather than in the translation files.
-const FEATURED_INDEX = 2;
-
-// hidden-sprint: three services while Brand Sprint is parked. Put the grid
-// below back to `md:grid-cols-4` when it returns.
-// hidden-prices: the price block in the card is commented out too.
+// hidden-sprint: three services while Brand Sprint is parked.
+// hidden-prices: prices are off the site for now. Restore the amounts together
+// with `pricePrefix`/`priceAmount` in the i18n dictionaries; they belong in the
+// right-hand column under each title, in `tabular` numerals.
 ---
-<section id="services" class="px-6 md:px-12 py-28 bg-panel/30">
+<section id="services" class="px-6 md:px-12 py-24 md:py-32 bg-piedra/40">
   <div class="max-w-6xl mx-auto">
-    <div class="mb-16">
-      <p class="text-xs tracking-[0.3em] uppercase text-muted mb-3">{t.services.eyebrow}</p>
-      <h2 class="font-display font-bold text-[clamp(1.5rem,5vw,3.5rem)] text-crema leading-tight">
-        {t.services.titleLine1}<br />{t.services.titleLine2}
-      </h2>
-    </div>
+    <h2 data-reveal class="display text-[clamp(2rem,5.5vw,4.25rem)] text-antracita max-w-3xl mb-16 md:mb-20">
+      {t.services.titleLine1}<br />{t.services.titleLine2}
+    </h2>
 
-    <div class="grid md:grid-cols-3 gap-4">
-      {t.services.items.map((s, i) => {
-        const featured = i === FEATURED_INDEX;
-        return (
-          <div
-            class:list={[
-              "relative rounded-2xl p-7 flex flex-col",
-              featured ? "bg-tierra text-antracita" : "bg-panel border border-panel-2",
-            ]}
-          >
-            {featured && (
-              <span class="absolute -top-3 left-6 text-xs bg-fractura text-antracita font-semibold px-3 py-1 rounded-full">
-                {t.services.popular}
-              </span>
-            )}
-
-            <div class="mb-6">
-              <h3
-                class:list={[
-                  "font-display font-bold text-xl mb-1",
-                  featured ? "text-antracita" : "text-crema",
-                ]}
-              >{s.title}</h3>
-              {/* hidden-prices: prices are off the site for now. Restore this block
-                  together with `pricePrefix`/`priceAmount` in the i18n dictionaries.
-                  The prefix sits on its own line because CLP amounts are far too
-                  long to share a line with it in a narrow card; the line is
-                  reserved even when there is no prefix so the amounts across all
-                  cards stay on a shared baseline.
-              <p
-                class:list={[
-                  "text-2xl font-bold",
-                  featured ? "text-antracita/80" : "text-tierra",
-                ]}
-              >
-                <span
-                  class:list={[
-                    "block text-xs font-medium uppercase tracking-widest",
-                    featured ? "text-antracita/60" : "text-muted",
-                  ]}
-                >{s.pricePrefix || '\u00A0'}</span>
-                {s.priceAmount}
-              </p>
-              */}
-            </div>
-
-            <p
-              class:list={[
-                "text-sm leading-relaxed mb-6",
-                featured ? "text-antracita/70" : "text-muted-2",
-              ]}
-            >{s.desc}</p>
-
-            <ul class="space-y-2 mb-8 flex-1">
-              {s.features.map((f) => (
-                <li
-                  class:list={[
-                    "text-sm flex items-center gap-2",
-                    featured ? "text-antracita/80" : "text-muted",
-                  ]}
-                >
-                  <span
-                    class:list={[
-                      "w-1 h-1 rounded-full flex-shrink-0",
-                      featured ? "bg-antracita/40" : "bg-tierra",
-                    ]}
-                  ></span>
-                  {f}
-                </li>
-              ))}
-            </ul>
-
-            <a
-              href="#contact"
-              class:list={[
-                "text-center text-sm font-semibold py-3 rounded-full transition-colors",
-                featured
-                  ? "bg-antracita text-fractura hover:bg-antracita/90"
-                  : "border border-panel-2 text-crema hover:border-muted",
-              ]}
-            >{t.services.quote}</a>
+    <ul class="border-t border-antracita">
+      {t.services.items.map((s) => (
+        <li data-reveal class="grid md:grid-cols-[5fr_4fr_auto] gap-6 md:gap-12 py-10 border-b border-piedra items-start">
+          <div>
+            <h3 class="display text-3xl md:text-4xl text-antracita !leading-tight mb-4">{s.title}</h3>
+            <p class="text-ceniza leading-relaxed max-w-md">{s.desc}</p>
           </div>
-        );
-      })}
-    </div>
+          <ul class="space-y-2 text-sm text-antracita md:pt-2">
+            {s.features.map((f) => (
+              <li class="flex gap-3"><span class="mt-[0.55em] w-3 h-px bg-tierra shrink-0"></span>{f}</li>
+            ))}
+          </ul>
+          <a href="#contact" class="btn btn-ghost md:self-end">{t.services.quote}</a>
+        </li>
+      ))}
+    </ul>
 
-    <p class="mt-8 text-sm text-muted text-center">
-      {t.services.footnote.pre}<a href="#contact" class="text-crema underline underline-offset-4">{t.services.footnote.link}</a>{t.services.footnote.post}
+    <p data-reveal class="mt-10 text-ceniza">
+      {t.services.footnote.pre}<a href="#contact" class="text-link underline underline-offset-4 font-medium">{t.services.footnote.link}</a>{t.services.footnote.post}
     </p>
   </div>
 </section>
