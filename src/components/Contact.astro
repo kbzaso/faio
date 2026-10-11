@@ -23,7 +23,7 @@ const subject = lang === 'es'
   : 'New inquiry from faio.cl';
 
 const inputClass =
-  'bg-surface-raised border border-line rounded-lg px-4 py-3.5 text-ink text-base w-full ' +
+  'bg-surface-raised border border-line px-4 py-3.5 text-ink text-base w-full ' +
   'focus:outline-none focus:border-fractura transition-colors ' +
   'aria-[invalid=true]:border-tierra';
 ---
@@ -54,7 +54,7 @@ const inputClass =
       id="contact-form"
       data-reveal
       style="--reveal-delay:120ms"
-      class="bg-surface-raised/40 rounded-2xl p-6 md:p-8 border border-line"
+      class="bg-surface-raised/40 p-6 md:p-8 border border-line"
       novalidate
     >
       <!-- Web3Forms metadata. Never shown, never edited by the visitor. -->
@@ -165,7 +165,7 @@ const inputClass =
 
       <!-- Swapped in for the fields once the submission lands. -->
       <div class="text-center py-6" data-success tabindex="-1" hidden>
-        <div class="w-12 h-12 rounded-full bg-tierra text-antracita mx-auto mb-5 grid place-items-center"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="w-12 h-12 bg-tierra text-antracita mx-auto mb-5 grid place-items-center"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <p class="display text-2xl mb-2">{f.success.title}</p>
         <p class="text-sm text-ink-2 leading-relaxed max-w-xs mx-auto mb-6">{f.success.body}</p>
         <button

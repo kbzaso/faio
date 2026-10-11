@@ -82,7 +82,17 @@
     text-rendering: optimizeLegibility;
   }
 
-  body { overflow-x: hidden; font-feature-settings: "kern", "liga"; }
+  body {
+    overflow-x: hidden;
+    font-feature-settings: "kern", "liga";
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+  }
+  /* Short pages (process, services, about): the section stretches so the footer
+     rests at the bottom of the viewport instead of floating mid-screen. */
+  main { flex: 1; display: flex; flex-direction: column; }
+  main > section { flex: 1; }
 
   /* Palabras largas (el español las tiene) nunca deben escapar de su
      contenedor. `anywhere` también reduce el min-content, que es lo que
@@ -105,14 +115,14 @@
   :focus-visible {
     outline: 2px solid var(--link);
     outline-offset: 3px;
-    border-radius: 2px;
+    border-radius: 0;
   }
 
   ::placeholder { color: var(--ink-2); opacity: 0.7; }
 
   ::-webkit-scrollbar { width: 10px; height: 10px; }
   ::-webkit-scrollbar-track { background: #F1EFE8; }
-  ::-webkit-scrollbar-thumb { background: #D3D1C7; border: 2px solid #F1EFE8; border-radius: 99px; }
+  ::-webkit-scrollbar-thumb { background: #D3D1C7; border: 2px solid #F1EFE8; border-radius: 0; }
   ::-webkit-scrollbar-thumb:hover { background: #5F5E5A; }
   html { scrollbar-color: #D3D1C7 #F1EFE8; }
 
@@ -159,7 +169,7 @@
   font-weight: 600;
   font-size: 0.95rem;
   line-height: 1;
-  border-radius: 999px;
+  border-radius: 0;
   transition: background-color 0.2s, color 0.2s, transform 0.2s var(--ease-out);
   white-space: nowrap;
 }
@@ -231,18 +241,17 @@ html.no-reveal [data-reveal] {
   animation-timing-function: cubic-bezier(0.45, 0, 0.2, 1);
 }
 ::view-transition-group(site-nav) { animation: none; }
+/* La barra puede cambiar de tema (oscura <-> clara) entre páginas: se funde en
+   normal, sin el plus-lighter por defecto que la hace parpadear en blanco. */
+::view-transition-old(site-nav),
+::view-transition-new(site-nav) {
+  mix-blend-mode: normal;
+  animation-duration: 0.35s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-/* Las imágenes se mueven con sus esquinas: el grupo recorta con el mismo radio
-   que la tarjeta y la cabecera (rounded-2xl = 1rem), no con el del snapshot. */
-::view-transition-group(*) {
-  overflow: clip;
-  border-radius: 1rem;
-}
-::view-transition-group(root),
-::view-transition-group(site-nav) {
-  overflow: visible;
-  border-radius: 0;
-}
+/* Aristas vivas: nada se redondea, tampoco durante la transición. */
+::view-transition-group(*) { border-radius: 0; }
 
 /* La tarjeta y la cabecera tienen proporciones distintas: la imagen se recorta
    (cover) mientras se mueve en vez de estirarse. */

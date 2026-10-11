@@ -4,7 +4,7 @@ import { getLangFromUrl, useTranslations } from '../i18n';
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
-<section id="process" class="on-dark px-6 md:px-12 py-24 md:py-32">
+<section id="process" class="on-dark px-6 md:px-12 pt-36 md:pt-44 pb-24 md:pb-32 min-h-[80svh]">
   <div class="max-w-6xl mx-auto">
     <h2 data-reveal class="display text-[clamp(2rem,5.5vw,4.25rem)] max-w-3xl mb-16 md:mb-24">
       {t.process.titleLine1}<br />{t.process.titleLine2}

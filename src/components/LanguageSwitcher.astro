@@ -12,7 +12,7 @@ const options = (Object.keys(languages) as Lang[]).map((code) => ({
 }));
 ---
 <div
-  class="flex items-center rounded-full border border-ink/40 p-0.5"
+  class="flex items-center border border-ink/40 p-0.5"
   role="group"
   aria-label={t.langSwitcher.label}
 >
@@ -25,7 +25,7 @@ const options = (Object.keys(languages) as Lang[]).map((code) => ({
       aria-label={label}
       aria-current={code === current ? 'true' : undefined}
       class:list={[
-        'px-2.5 py-1 text-xs font-semibold tracking-wide rounded-full transition-colors',
+        'px-2.5 py-1 text-xs font-semibold tracking-wide transition-colors',
         code === current
           ? 'bg-ink text-surface'
           : 'text-ink-2 hover:text-ink',

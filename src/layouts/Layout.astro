@@ -49,6 +49,56 @@ const alternates = (Object.keys(languages) as Lang[]).map((code) => ({
     <!-- Fonts are self-hosted via @fontsource (imported above): no third-party request, no flash of fallback. -->
 
     <!-- Runs before first paint so a redirected visitor never sees the wrong language. -->
+    <!-- Language switch without the jump: remember how far down the visitor was and
+         restore the same proportion on the other locale before first paint, so the
+         crossfade lands on the same spot instead of snapping back to the top. -->
+    <script is:inline>
+      (function () {
+        var KEY = 'faio:keep-scroll';
+        document.addEventListener('click', function (ev) {
+          var el = ev.target && ev.target.closest ? ev.target.closest('[data-set-lang]') : null;
+          if (!el) return;
+          try {
+            var h = document.documentElement.scrollHeight - window.innerHeight;
+            sessionStorage.setItem(KEY, JSON.stringify({ r: h > 0 ? window.scrollY / h : 0 }));
+          } catch (e) {}
+        });
+        // Read once, up front. The page is still being parsed when this runs, so
+        // the position is applied again at every point where the layout grows
+        // (parsed, loaded, fonts ready) until the visitor scrolls on their own.
+        var ratio = null;
+        try {
+          var raw = sessionStorage.getItem(KEY);
+          sessionStorage.removeItem(KEY);
+          if (raw) ratio = JSON.parse(raw).r;
+        } catch (e) {}
+        // Same page in another language: nothing should animate in a second time.
+        if (ratio !== null) document.documentElement.classList.add('no-reveal');
+        if ('onpagereveal' in window) {
+          window.addEventListener('pagereveal', function (e) {
+            if (e.viewTransition) document.documentElement.classList.add('no-reveal');
+          });
+        }
+        if (ratio === null) return;
+
+        var released = false;
+        function apply() {
+          if (released) return;
+          var h = document.documentElement.scrollHeight - window.innerHeight;
+          if (h <= 0) return;
+          window.scrollTo({ top: Math.round(ratio * h), left: 0, behavior: 'instant' });
+          if (window.__faioNavSync) window.__faioNavSync();
+        }
+        function release() { released = true; }
+        ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(function (t) {
+          window.addEventListener(t, release, { once: true, passive: true });
+        });
+        if ('onpagereveal' in window) window.addEventListener('pagereveal', apply);
+        document.addEventListener('DOMContentLoaded', apply);
+        window.addEventListener('load', function () { apply(); setTimeout(release, 400); });
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(apply);
+      })();
+    </script>
     {!noindex && <script is:inline set:html={localeRedirectScript} />}
 
     <script is:inline defer src="https://cloud.umami.is/script.js" data-website-id="71af548b-115e-42b5-9316-0eaa95c119d7"></script>
@@ -73,6 +123,11 @@ const alternates = (Object.keys(languages) as Lang[]).map((code) => ({
         function request() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
         window.addEventListener('scroll', request, { passive: true });
         window.addEventListener('resize', request);
+        // Exposed so a restored scroll position can settle the bar's theme in the
+        // same frame, before the view transition captures the new page.
+        window.__faioNavSync = update;
+        window.addEventListener('pagereveal', update);
+        document.addEventListener('DOMContentLoaded', update);
         update();
       })();
     </script>

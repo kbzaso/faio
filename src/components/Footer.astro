@@ -10,10 +10,10 @@ const home = localizePath('/', lang);
 const link = (hash: string) => `${home}${hash}`;
 
 const items = [
-  { href: link('#work'), label: t.nav.work },
-  { href: link('#process'), label: t.nav.process },
-  { href: link('#services'), label: t.nav.services },
-  { href: link('#about'), label: t.nav.about },
+  { href: home, label: t.nav.work },
+  { href: localizePath('/process', lang), label: t.nav.process },
+  { href: localizePath('/services', lang), label: t.nav.services },
+  { href: localizePath('/about', lang), label: t.nav.about },
   { href: link('#contact'), label: t.nav.contact },
 ];
 ---

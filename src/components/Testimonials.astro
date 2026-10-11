@@ -14,7 +14,7 @@ const t = useTranslations(lang);
 
     <div class="grid md:grid-cols-3 gap-6">
       {t.testimonials.items.map((item) => (
-        <blockquote class="bg-surface-raised rounded-2xl p-8 flex flex-col justify-between border border-line hover:border-tierra/40 transition-colors duration-300">
+        <blockquote class="bg-surface-raised p-8 flex flex-col justify-between border border-line hover:border-tierra/40 transition-colors duration-300">
           <!-- Quote mark -->
           <div>
             <span class="text-tierra display text-5xl leading-none select-none">"</span>
@@ -22,7 +22,7 @@ const t = useTranslations(lang);
           </div>
 
           <footer class="mt-8 flex items-center gap-3">
-            <div class="w-9 h-9 rounded-full bg-tierra/20 flex items-center justify-center text-tierra font-bold text-sm flex-shrink-0">
+            <div class="w-9 h-9 bg-tierra/20 flex items-center justify-center text-tierra font-bold text-sm flex-shrink-0">
               {item.initial}
             </div>
             <div>

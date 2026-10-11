@@ -1,15 +1,16 @@
 ---
-import { getLangFromUrl, useTranslations } from '../i18n';
+import { getLangFromUrl, useTranslations, localizePath } from '../i18n';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+const contact = `${localizePath('/', lang)}#contact`;
 
 // hidden-sprint: three services while Brand Sprint is parked.
 // hidden-prices: prices are off the site for now. Restore the amounts together
 // with `pricePrefix`/`priceAmount` in the i18n dictionaries; they belong in the
 // right-hand column under each title, in `tabular` numerals.
 ---
-<section id="services" class="px-6 md:px-12 py-24 md:py-32 bg-piedra/40">
+<section id="services" class="px-6 md:px-12 pt-36 md:pt-44 pb-24 md:pb-32 bg-piedra/40">
   <div class="max-w-6xl mx-auto">
     <h2 data-reveal class="display text-[clamp(2rem,5.5vw,4.25rem)] text-antracita max-w-3xl mb-16 md:mb-20">
       {t.services.titleLine1}<br />{t.services.titleLine2}
@@ -27,13 +28,13 @@ const t = useTranslations(lang);
               <li class="flex gap-3"><span class="mt-[0.55em] w-3 h-px bg-tierra shrink-0"></span>{f}</li>
             ))}
           </ul>
-          <a href="#contact" class="btn btn-ghost md:self-end">{t.services.quote}</a>
+          <a href={contact} class="btn btn-ghost md:self-end">{t.services.quote}</a>
         </li>
       ))}
     </ul>
 
     <p data-reveal class="mt-10 text-ceniza">
-      {t.services.footnote.pre}<a href="#contact" class="text-link underline underline-offset-4 font-medium">{t.services.footnote.link}</a>{t.services.footnote.post}
+      {t.services.footnote.pre}<a href={contact} class="text-link underline underline-offset-4 font-medium">{t.services.footnote.link}</a>{t.services.footnote.post}
     </p>
   </div>
 </section>

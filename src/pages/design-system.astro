@@ -45,8 +45,10 @@ const principles = [
   ['Un solo punto de oro', 'En cada pieza hay una idea central. El oro la marca; nada más brilla.'],
   ['El oro es línea, no superficie', 'Filetes, subrayados y trazos de 1–2px. Nunca un fondo, nunca un botón.'],
   ['Sistemas, no piezas', 'Reglas que sostienen la marca aunque la aplique otro equipo.'],
+  ['Aristas vivas', 'Radio cero en todo: botones, campos, tarjetas e imágenes. La fractura es el único gesto irregular.'],
 ];
 const dont = [
+  'Esquinas redondeadas, botones tipo píldora o avatares circulares: todo es de arista viva.',
   'Blanco puro (#FFFFFF) o negro puro (#000000).',
   'Azules corporativos y verdes “startup”.',
   'Fractura dorada como texto sobre crema (1.9:1).',
@@ -109,7 +111,7 @@ const nav = [
         <p class="text-ceniza max-w-2xl mb-12">Proporción 60 / 30 / 8 / 2. La paleta no decora: jerarquiza.</p>
 
         <!-- Proporción real, a escala -->
-        <div class="flex h-14 rounded-lg overflow-hidden border border-piedra mb-3" role="img" aria-label="Proporción de uso: crema 60, antracita 30, tierra 8, dorado 2">
+        <div class="flex h-14 overflow-hidden border border-piedra mb-3" role="img" aria-label="Proporción de uso: crema 60, antracita 30, tierra 8, dorado 2">
           <div class="bg-crema" style="flex:60"></div>
           <div class="bg-antracita" style="flex:30"></div>
           <div class="bg-tierra" style="flex:8"></div>
@@ -119,7 +121,7 @@ const nav = [
 
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-14">
           {colors.map((c) => (
-            <article class="rounded-xl overflow-hidden border border-piedra bg-crema">
+            <article class="overflow-hidden border border-piedra bg-crema">
               <div class="h-36 p-4 flex items-end justify-between" style={`background:${c.hex};color:${c.ink}`}>
                 <span class="display text-2xl !leading-none">{c.share}</span>
                 <span class="text-sm font-semibold">{c.role}</span>
@@ -136,7 +138,7 @@ const nav = [
         <h3 class="display text-2xl mb-6">Apoyo</h3>
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {support.map((c) => (
-            <article class="rounded-xl overflow-hidden border border-piedra">
+            <article class="overflow-hidden border border-piedra">
               <div class="h-20" style={`background:${c.hex}`}></div>
               <div class="p-4">
                 <h4 class="font-semibold">{c.name}</h4>
@@ -167,7 +169,7 @@ const nav = [
                 <tr class="border-b border-piedra">
                   <td class="py-4 pr-6 font-mono text-[0.8rem]">--{token}</td>
                   <td class="py-4 pr-6 font-mono text-[0.8rem] text-ceniza">{role}</td>
-                  <td class="py-4 pr-6"><span class="inline-flex items-center gap-3"><span class="w-5 h-5 rounded border border-piedra" style={`background:${hex}`}></span>{name}</span></td>
+                  <td class="py-4 pr-6"><span class="inline-flex items-center gap-3"><span class="w-5 h-5 border border-piedra" style={`background:${hex}`}></span>{name}</span></td>
                   <td class="py-4 text-ceniza">{dark}</td>
                 </tr>
               ))}
@@ -176,12 +178,12 @@ const nav = [
         </div>
 
         <div class="mt-14 grid md:grid-cols-2 gap-5">
-          <div class="rounded-xl p-8 border border-piedra">
+          <div class="p-8 border border-piedra">
             <p class="display text-3xl mb-3">Modo claro</p>
             <p class="text-ceniza mb-4">Texto principal sobre crema roto. Secundario en ceniza.</p>
             <a href="#tokens" class="text-link underline underline-offset-4 font-medium">Link en tierra profunda</a>
           </div>
-          <div class="on-dark rounded-xl p-8">
+          <div class="on-dark p-8">
             <p class="display text-3xl mb-3">Modo oscuro</p>
             <p class="text-ink-2 mb-4">Antracita como base. Grafito para superficies elevadas.</p>
             <a href="#tokens" class="text-link underline underline-offset-4 font-medium">Link en fractura dorada</a>
@@ -233,15 +235,15 @@ const nav = [
 
           <h3 class="display text-2xl mb-6">Botones</h3>
           <div class="grid md:grid-cols-2 gap-5">
-            <div class="rounded-xl border border-piedra p-8">
+            <div class="border border-piedra p-8">
               <div class="flex flex-wrap gap-4 mb-6">
                 <button class="btn btn-primary">Principal</button>
                 <button class="btn btn-ghost">Secundario</button>
                 <button class="btn btn-primary" disabled>Deshabilitado</button>
               </div>
-              <p class="text-sm text-ceniza">Principal en antracita; al pasar el cursor toma tierra quemada con texto antracita. El dorado nunca es un botón.</p>
+              <p class="text-sm text-ceniza">Principal en antracita; al pasar el cursor toma tierra quemada con texto antracita. Rectangulares, de arista viva. El dorado nunca es un botón.</p>
             </div>
-            <div class="on-dark rounded-xl p-8">
+            <div class="on-dark p-8">
               <div class="flex flex-wrap gap-4 mb-6">
                 <button class="btn bg-crema text-antracita hover:bg-tierra">Principal</button>
                 <button class="btn" style="box-shadow: inset 0 0 0 1px #F1EFE8">Secundario</button>
@@ -253,15 +255,15 @@ const nav = [
 
         <div>
           <h3 class="display text-2xl mb-6">Campos de formulario</h3>
-          <div class="on-dark rounded-xl p-8 grid md:grid-cols-2 gap-6">
+          <div class="on-dark p-8 grid md:grid-cols-2 gap-6">
             <div class="flex flex-col gap-2">
               <label class="text-sm font-medium" for="ds-name">Nombre</label>
-              <input id="ds-name" class="bg-surface-raised border border-line rounded-lg px-4 py-3.5 text-base focus:outline-none focus:border-fractura transition-colors" placeholder="Tu nombre" />
+              <input id="ds-name" class="bg-surface-raised border border-line px-4 py-3.5 text-base focus:outline-none focus:border-fractura transition-colors" placeholder="Tu nombre" />
               <p class="text-sm text-ink-2">Foco: borde dorado de 1px, la grieta que se abre.</p>
             </div>
             <div class="flex flex-col gap-2">
               <label class="text-sm font-medium" for="ds-mail">Correo</label>
-              <input id="ds-mail" aria-invalid="true" value="nombre@" class="bg-surface-raised border border-tierra rounded-lg px-4 py-3.5 text-base focus:outline-none" />
+              <input id="ds-mail" aria-invalid="true" value="nombre@" class="bg-surface-raised border border-tierra px-4 py-3.5 text-base focus:outline-none" />
               <p class="text-sm text-tierra">Escribe un correo válido, por ejemplo nombre@empresa.cl.</p>
             </div>
           </div>
@@ -269,7 +271,7 @@ const nav = [
 
         <div>
           <h3 class="display text-2xl mb-6">La grieta</h3>
-          <div class="rounded-xl border border-piedra p-8 md:p-12">
+          <div class="border border-piedra p-8 md:p-12">
             <p class="display text-4xl md:text-5xl mb-8 max-w-2xl">Una idea central, <span class="relative inline-block">marcada en oro.
               <svg class="absolute left-0 -bottom-[0.12em] w-full h-[0.2em] overflow-visible" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true">
                 <path d="M0 6 L16 3 L28 7 L50 2.5 L64 6.5 L82 3 L100 5" fill="none" stroke="#EF9F27" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" />
