@@ -32,13 +32,14 @@ const contrast = [
   ['Fractura dorada sobre crema roto', '1.9:1', 'Nunca texto. Solo líneas y gráficos', false],
 ];
 const type = [
-  { label: 'Display XL', spec: 'Bricolage Grotesque 700 · clamp(2.5rem, 9.2vw, 8rem) · -0.035em · 0.98', cls: 'display text-[clamp(2.5rem,7vw,5.5rem)]', sample: 'Marcas que se sostienen' },
-  { label: 'Display L', spec: 'Bricolage Grotesque 700 · clamp(2rem, 5.5vw, 4.25rem) · -0.035em', cls: 'display text-[clamp(2rem,4.5vw,3.5rem)]', sample: 'Un proceso hecho para reducir riesgos' },
-  { label: 'Título', spec: 'Bricolage Grotesque 700 · 1.5–2.25rem · -0.035em', cls: 'display text-3xl', sample: 'Identidad de marca' },
+  { label: 'Display XL', spec: 'Iosevka Charon Mono 700 · clamp(2.25rem, 7vw, 5.5rem) · -0.03em · 1.05', cls: 'display text-[clamp(2.25rem,6vw,4.5rem)]', sample: 'Marcas que se sostienen' },
+  { label: 'Display L', spec: 'Iosevka Charon Mono 700 · clamp(2rem, 5vw, 3.5rem) · -0.03em', cls: 'display text-[clamp(1.75rem,4vw,3rem)]', sample: 'Un proceso hecho para reducir riesgos' },
+  { label: 'Título', spec: 'Iosevka Charon Mono 700 · 1.5–2.25rem · -0.03em', cls: 'display text-3xl', sample: 'Identidad de marca' },
+  { label: 'Énfasis', spec: 'Iosevka Charon Mono 700 en tierra profunda (oro sobre antracita) · una sola frase por pieza, la que lleva la grieta dorada', cls: 'hand text-5xl text-tierra-profunda', sample: 'es decoración.' },
   { label: 'Cuerpo L', spec: 'Hanken Grotesk 400 · 1.125–1.25rem · 1.6 · 65–75ch', cls: 'text-xl leading-relaxed', sample: 'Diseñamos identidades que funcionan como sistema: reglas claras para que la marca se mantenga coherente en cada punto de contacto.' },
   { label: 'Cuerpo', spec: 'Hanken Grotesk 400 · 1rem · 1.6', cls: 'text-base leading-relaxed text-ceniza', sample: 'Primero entendemos el problema; la forma viene después. Cada decisión visual responde a una pregunta estratégica.' },
-  { label: 'Manuscrita', spec: 'Caveat 700 · 1.22em sobre el display · una sola frase por pieza, la que lleva el oro', cls: 'hand text-6xl text-tierra-profunda', sample: 'es decoración.' },
-  { label: 'Dato', spec: 'JetBrains Mono 500 · 0.75rem · solo para tokens, medidas y código', cls: 'font-mono text-xs', sample: 'color.signature → #EF9F27' },
+  { label: 'Marca', spec: 'Bitcount Single 500 · números de secuencia y cifras clave', cls: 'mark text-6xl text-tierra tabular', sample: '01 · 40+' },
+  { label: 'Dato', spec: 'Iosevka Charon Mono 400 · 0.75rem · tokens, medidas y código', cls: 'font-mono text-xs', sample: 'color.signature → #EF9F27' },
 ];
 const principles = [
   ['Estrategia antes que estética', 'Cada decisión visual responde a una pregunta. Si no tiene porqué, no va.'],
@@ -212,7 +213,7 @@ const nav = [
     <section id="tipografia" class="px-6 md:px-12 py-20 border-t border-piedra scroll-mt-20">
       <div data-reveal class="max-w-6xl mx-auto">
         <h2 class="display text-4xl mb-4">Tipografía</h2>
-        <p class="text-ceniza max-w-2xl mb-14">Dos voces: Bricolage Grotesque para decidir, Hanken Grotesk para explicar. Medida de lectura de 65 a 75 caracteres; números tabulares en datos.</p>
+        <p class="text-ceniza max-w-2xl mb-14">Iosevka Charon Mono es la voz principal: titulares y énfasis, siempre en monoespaciada. Hanken Grotesk explica. Bitcount Single marca números y cifras clave. Medida de lectura de 65 a 75 caracteres; números tabulares en datos.</p>
         <div class="space-y-12">
           {type.map((s) => (
             <div class="grid md:grid-cols-[1fr_2fr] gap-4 md:gap-12 items-baseline border-t border-piedra pt-6">

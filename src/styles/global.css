@@ -14,11 +14,11 @@
   --color-tierra-profunda: #993C1D; /* Tierra profunda — links sobre claro */
   --color-grafito: #444441;      /* Grafito — superficies elevadas en oscuro */
 
-  --font-display: 'Germania One', 'Hanken Grotesk Variable', serif;
+  --font-display: 'Iosevka Charon Mono', ui-monospace, 'SFMono-Regular', monospace;
   --font-body: 'Hanken Grotesk Variable', 'Hanken Grotesk', 'Helvetica Neue', sans-serif;
   --font-hand: var(--font-display);
   --font-mark: 'Bitcount Single Variable', 'JetBrains Mono', monospace;
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-mono: 'Iosevka Charon Mono', 'JetBrains Mono', ui-monospace, monospace;
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -132,18 +132,18 @@
 /* ── Tipografía utilitaria ── */
 .display {
   font-family: var(--font-display);
-  font-weight: 400; /* Germania One solo tiene un peso */
-  letter-spacing: -0.005em;
-  line-height: 1.02;
+  font-weight: 700;
+  letter-spacing: -0.03em; /* monoespaciada: se aprieta para que el titular respire como texto */
+  line-height: 1.05;
 }
 
-/* Énfasis: la misma Germania One de los titulares; lo que la distingue es el
+/* Énfasis: la misma Iosevka Charon Mono de los titulares; lo que la distingue es el
    color (tierra profunda / oro sobre oscuro) y la grieta dorada debajo. */
 .hand {
   font-family: var(--font-hand);
-  font-weight: 400;
-  letter-spacing: -0.005em;
-  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
 }
 
 /* Manuscrita de marca (Bitcount Single): números y marcas de secuencia.

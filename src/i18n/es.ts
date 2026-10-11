@@ -24,6 +24,8 @@ export const es: Dictionary = {
     about: "Estudio",
     contact: "Contacto",
     cta: "Comenzar un proyecto",
+    menu: "Menú",
+    closeMenu: "Cerrar menú",
     ctaShort: "Comenzar",
   },
 

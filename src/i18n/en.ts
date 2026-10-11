@@ -23,6 +23,8 @@ export const en = {
     about: "About",
     contact: "Contact",
     cta: "Start a project",
+    menu: "Menu",
+    closeMenu: "Close menu",
     ctaShort: "Start",
   },
 

@@ -14,7 +14,7 @@ importers:
       '@fontsource-variable/hanken-grotesk':
         specifier: ^5.3.0
         version: 5.3.0
-      '@fontsource/germania-one':
+      '@fontsource/iosevka-charon-mono':
         specifier: ^5.3.0
         version: 5.3.0
       '@fontsource/jetbrains-mono':
@@ -228,8 +228,8 @@ packages:
   '@fontsource-variable/hanken-grotesk@5.3.0':
     resolution: {integrity: sha512-DOd0FqL+3cH2dfNy0JtSq9tUfxBz5mLmHMjTU0DOr3E9Zo6wxuatCl53DIPNrSPgCsnuKyM739BTIG5glCLirw==}
 
-  '@fontsource/germania-one@5.3.0':
-    resolution: {integrity: sha512-GLN9hLkFwn4siRGLexERaWILDZgwUIZyEOcAMOFDDPxrlYaeWJKZnSNzea+F1UXkuhHcHHlvxG9BJSgeZdeJDg==}
+  '@fontsource/iosevka-charon-mono@5.3.0':
+    resolution: {integrity: sha512-doeCDRe9/IHnHI0sN7ILBPRX5p5NiDazkirBFPwzjGsAinBMkSh2do1lgGUO6gQDW8NTs2x1AXGn5hm24znG8A==}
 
   '@fontsource/jetbrains-mono@5.3.0':
     resolution: {integrity: sha512-fqDfB5I9f1p1TV486aUgB9t8zP84P0O1FtQR5Ol9vjwPy+S+EIGlVYm1cvj2W5shcZMTg2nZFdVMoH5wFu8a1A==}
@@ -1825,7 +1825,7 @@ snapshots:
 
   '@fontsource-variable/hanken-grotesk@5.3.0': {}
 
-  '@fontsource/germania-one@5.3.0': {}
+  '@fontsource/iosevka-charon-mono@5.3.0': {}
 
   '@fontsource/jetbrains-mono@5.3.0': {}
 
